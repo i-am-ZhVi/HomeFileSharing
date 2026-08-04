@@ -1,6 +1,10 @@
-def main():
-    print("Hello from homefilesharing!")
-
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    from core.config import settings
+    uvicorn.run(
+        "server:app",
+        port=settings.API_PORT,
+        host=settings.API_HOST,
+        reload=True
+    )
