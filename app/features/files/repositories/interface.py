@@ -6,7 +6,7 @@ from app.infrastructure.db_models.file_table import File
 
 class FileRepository(ABC):
     @abstractmethod
-    async def get(self, file_id: int | None, sub_name: str | None, extension_id: int | None, mime_type: str | None, category_id: int | None) -> File | list[File] | None:
+    async def get(self, file_id: int | None, sub_name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None) -> File | list[File] | None:
         pass
 
     @abstractmethod
