@@ -8,13 +8,13 @@ from app.infrastructure.db_models.file_table import File
 
 class FileRepository(ABC):
     @abstractmethod
-    async def get(self, file_id: Optional[int]) -> Optional[File | list[File]]:
+    async def get(self, file_id: Optional[int], sub_name: Optional[str], extention_id: Optional[int], mime_type: Optional[str], category_id: Optional[int]) -> Optional[File | list[File]]:
         pass
 
     @abstractmethod
-    async def create(self, name: str, extension: Optional[str], mime_type: Optional[str], category: str, password_hash: Optional[str]) -> Optional[File]:
+    async def create(self, name: str, extension_id: Optional[int], mime_type: Optional[str], category_id: int, password_hash: Optional[str]) -> Optional[File]:
         pass
 
     @abstractmethod
-    async def update(self, file_id: int, name: str, extension: Optional[str], mime_type: Optional[str], category: str, password_hash: Optional[str]) -> Optional[File]:
+    async def update(self, file_id: int, name: str, extension_id: Optional[int], mime_type: Optional[str], category_id: int, password_hash: Optional[str]) -> Optional[File]:
         pass
