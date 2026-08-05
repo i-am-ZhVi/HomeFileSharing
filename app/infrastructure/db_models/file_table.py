@@ -9,11 +9,15 @@ from infrastructure.db_models.base_table import Base
 class File(Base):
     id: Mapped[int] = mapped_column(nullable=False, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(nullable=False)
-    extension: Mapped[str] = mapped_column(nullable=True)
+    extension_id: Mapped[int] = mapped_column(ForeignKey("extension.id"), nullable=True)
     mime_type: Mapped[str] = mapped_column(nullable=True)
     category_id: Mapped[int] = mapped_column(ForeignKey("category.id"), nullable=False)
     password_hash: Mapped[str] = mapped_column(nullable=True)
     upload_at: Mapped[datetime] = mapped_column(nullable=False, default=datetime.now(), server_default=text("TIMEZONE('utc', now())"))
+
+    extension: Mapped["Extension"] = relationship(
+        back_populates="files"
+    )
 
     category: Mapped["Category"] = relationship(
         back_populates="files"
