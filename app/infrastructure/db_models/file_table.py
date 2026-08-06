@@ -13,7 +13,6 @@ class File(Base):
     mime_type_id: Mapped[int] = mapped_column(ForeignKey("mime_type.id"), nullable=False)
     category_id: Mapped[int] = mapped_column(ForeignKey("category.id"), nullable=False)
     password_hash: Mapped[str] = mapped_column(nullable=True)
-    upload_at: Mapped[datetime] = mapped_column(nullable=False, default=datetime.now(), server_default=text("TIMEZONE('utc', now())"))
 
     extension: Mapped["Extension"] = relationship(
         back_populates="files"
