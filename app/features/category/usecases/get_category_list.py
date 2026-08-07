@@ -2,7 +2,7 @@ from app.features.category.repositories.interface import CategoryRepository
 from app.infrastructure.db_models.category_table import Category
 
 
-class GetCategoryByIdUseCase:
+class GetCategoryListUseCase:
     def __init__(self, repo: CategoryRepository):
         self.repo = repo
 
