@@ -5,7 +5,11 @@ from app.infrastructure.db_models.mime_type_table import MimeType
 
 class MimeTypeRepository(ABC):
     @abstractmethod
-    async def get(self, mime_type_id: int | None, sub_name: str | None, category_id: int | None) -> MimeType | list[MimeType] | None:
+    async def get_by_id(self, id: int) -> MimeType | None:
+        pass
+
+    @abstractmethod
+    async def get_list(self, sub_name: str | None, category_id: int | None) -> list[MimeType]:
         pass
 
     @abstractmethod

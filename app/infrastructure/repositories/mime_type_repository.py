@@ -32,7 +32,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             logger.exception("MimeType repository: database error coccurred during get operation workflow.")
             raise
 
-    async def get_list(self, sub_name: str | None, category_id: int | None) -> MimeType | list[MimeType] | None:
+    async def get_list(self, sub_name: str | None, category_id: int | None) -> list[MimeType]:
         logger.debug(
             "MimeType repository: get mime types. Params: "
             f"sub_name={sub_name}, category_id={category_id}."
