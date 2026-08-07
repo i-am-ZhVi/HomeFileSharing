@@ -12,7 +12,7 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
         self.session = session
 
 
-    async def get_by_id(self, id: int) -> FileVersion | None:
+    async def get_by_id(self, id: str) -> FileVersion | None:
         logger.debug(
             "File version repository: get file versions. Params"
             f"id={id}."
