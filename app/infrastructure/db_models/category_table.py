@@ -8,10 +8,6 @@ class Category(Base):
     name: Mapped[str] = mapped_column(nullable=False, unique=True)
 
 
-    files: Mapped[list["File"]] = relationship(
-        back_populates="category", cascade="all, delete-orphan", passive_deletes=True
-    )
-
     mime_types: Mapped[list["MimeType"]] = relationship(
         back_populates="category", cascade="all, delete-orphan", passive_deletes=True
     )

@@ -25,7 +25,6 @@ class SQLAlchemyFileRepository(FileRepository):
             response = await self.session.execute(select(File)
                 .where(File.id == id)
                 .options(
-                    selectinload(File.category),
                     selectinload(File.mime_type),
                     selectinload(File.extension),
                     selectinload(File.versions),))
@@ -49,7 +48,6 @@ class SQLAlchemyFileRepository(FileRepository):
         )
         try:
             query = select(File).options(
-                selectinload(File.category),
                 selectinload(File.mime_type),
                 selectinload(File.extension),
                 selectinload(File.versions),

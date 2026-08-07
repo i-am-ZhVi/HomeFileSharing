@@ -18,7 +18,7 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"id={id}."
         )
         try:
-            response = await self.session.execute(select(Category).where(Category.id == id).options(selectinload(Category.mime_types), selectinload(Category.files)))
+            response = await self.session.execute(select(Category).where(Category.id == id).options(selectinload(Category.mime_types)))
             result = response.scalar_one_or_none()
 
             if result:
@@ -37,7 +37,7 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"sub_name={sub_name}, mime_type_id={mime_type_id}."
         )
         try:
-            query = select(Category).options(selectinload(Category.mime_types), selectinload(Category.files)).order_by(desc(Category.created_at), desc(Category.id))
+            query = select(Category).options(selectinload(Category.mime_types)).order_by(desc(Category.created_at), desc(Category.id))
 
             if sub_name:
                 query = query.where(Category.name.contains(sub_name))
@@ -82,7 +82,7 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"category_id={category_id}, category_name={category_name}."
         )
         try:
-            response = await self.session.execute(select(Category).where(Category.id == category_id).options(selectinload(Category.mime_types), selectinload(Category.files)))
+            response = await self.session.execute(select(Category).where(Category.id == category_id).options(selectinload(Category.mime_types)))
 
             category = response.scalar_one_or_none()
             if not category:

@@ -11,7 +11,6 @@ class File(Base):
     name: Mapped[str] = mapped_column(nullable=False)
     extension_id: Mapped[int] = mapped_column(ForeignKey("extension.id"), nullable=False)
     mime_type_id: Mapped[int] = mapped_column(ForeignKey("mime_type.id"), nullable=False)
-    category_id: Mapped[int] = mapped_column(ForeignKey("category.id"), nullable=False)
     password_hash: Mapped[str] = mapped_column(nullable=True)
 
     extension: Mapped["Extension"] = relationship(
@@ -19,10 +18,6 @@ class File(Base):
     )
 
     mime_type: Mapped["MimeType"] = relationship(
-        back_populates="files"
-    )
-
-    category: Mapped["Category"] = relationship(
         back_populates="files"
     )
 
