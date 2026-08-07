@@ -1,5 +1,5 @@
-from app.features.extension.repositories.interface import ExtensionRepository
-from app.infrastructure.db_models.extension_table import Extension
+from features.extension.repositories.interface import ExtensionRepository
+from infrastructure.db_models.extension_table import Extension
 
 
 class GetExtensionListUseCase:

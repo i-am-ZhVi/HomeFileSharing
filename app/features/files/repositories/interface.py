@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from app.infrastructure.db_models.file_table import File
+from infrastructure.db_models.file_table import File
 
 
 class FileRepository(ABC):

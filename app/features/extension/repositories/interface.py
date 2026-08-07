@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.infrastructure.db_models.extension_table import Extension
+from infrastructure.db_models.extension_table import Extension
 
 
 class ExtensionRepository(ABC):

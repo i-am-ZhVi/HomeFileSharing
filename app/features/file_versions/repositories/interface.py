@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.infrastructure.db_models.file_version_table import FileVersion
+from infrastructure.db_models.file_version_table import FileVersion
 
 
 class FileVersionRepository(ABC):

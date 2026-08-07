@@ -1,5 +1,5 @@
-from app.features.file_versions.repositories.interface import FileVersionRepository
-from app.infrastructure.db_models.file_version_table import FileVersion
+from features.file_versions.repositories.interface import FileVersionRepository
+from infrastructure.db_models.file_version_table import FileVersion
 
 
 class GetFileVersionListUseCase:

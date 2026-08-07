@@ -6,9 +6,9 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.core.logger import logger
-from app.features.files.repositories.interface import FileRepository
-from app.infrastructure.db_models.file_table import File
+from core.logger import logger
+from features.files.repositories.interface import FileRepository
+from infrastructure.db_models.file_table import File
 
 
 class SQLAlchemyFileRepository(FileRepository):

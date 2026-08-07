@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.infrastructure.db_models.mime_type_table import MimeType
+from infrastructure.db_models.mime_type_table import MimeType
 
 
 class MimeTypeRepository(ABC):

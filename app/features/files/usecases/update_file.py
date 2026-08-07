@@ -1,6 +1,6 @@
 
-from app.features.files.repositories.interface import FileRepository
-from app.infrastructure.db_models.file_table import File
+from features.files.repositories.interface import FileRepository
+from infrastructure.db_models.file_table import File
 
 
 class UpdateFileUseCase:

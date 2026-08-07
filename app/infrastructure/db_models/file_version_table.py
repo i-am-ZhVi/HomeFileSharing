@@ -4,7 +4,7 @@ import uuid
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import text
-from app.infrastructure.db_models.base_table import Base
+from infrastructure.db_models.base_table import Base
 
 
 class FileVersion(Base):

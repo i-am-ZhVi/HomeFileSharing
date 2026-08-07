@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.infrastructure.db_models.category_table import Category
+from infrastructure.db_models.category_table import Category
 
 
 class CategoryRepository(ABC):

@@ -2,10 +2,10 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from app.core.logger import logger
-from app.features.category.repositories.interface import CategoryRepository
-from app.infrastructure.db_models.category_table import Category
-from app.infrastructure.db_models.mime_type_table import MimeType
+from core.logger import logger
+from features.category.repositories.interface import CategoryRepository
+from infrastructure.db_models.category_table import Category
+from infrastructure.db_models.mime_type_table import MimeType
 
 
 class SQLAlchemyCategoryRepository(CategoryRepository):

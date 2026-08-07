@@ -1,5 +1,5 @@
-from app.features.mime_types.repositories.interface import MimeTypeRepository
-from app.infrastructure.db_models.mime_type_table import MimeType
+from features.mime_types.repositories.interface import MimeTypeRepository
+from infrastructure.db_models.mime_type_table import MimeType
 
 
 class GetMimeTypeByIdUseCase:

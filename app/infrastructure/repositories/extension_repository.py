@@ -2,9 +2,9 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from app.core.logger import logger
-from app.features.extension.repositories.interface import ExtensionRepository
-from app.infrastructure.db_models.extension_table import Extension
+from core.logger import logger
+from features.extension.repositories.interface import ExtensionRepository
+from infrastructure.db_models.extension_table import Extension
 
 
 class SQLAlchemyExtensionRepository(ExtensionRepository):

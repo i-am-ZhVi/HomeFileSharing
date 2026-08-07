@@ -1,5 +1,5 @@
-from app.features.category.repositories.interface import CategoryRepository
-from app.infrastructure.db_models.category_table import Category
+from features.category.repositories.interface import CategoryRepository
+from infrastructure.db_models.category_table import Category
 
 
 class GetCategoryByIdUseCase:

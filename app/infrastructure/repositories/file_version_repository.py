@@ -2,9 +2,9 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from app.core.logger import logger
-from app.features.file_versions.repositories.interface import FileVersionRepository
-from app.infrastructure.db_models.file_version_table import FileVersion
+from core.logger import logger
+from features.file_versions.repositories.interface import FileVersionRepository
+from infrastructure.db_models.file_version_table import FileVersion
 
 
 class SQLAlchemyFileVersionRepository(FileVersionRepository):
