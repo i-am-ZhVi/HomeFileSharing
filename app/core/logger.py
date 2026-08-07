@@ -1,5 +1,7 @@
 import logging
 
+import uvicorn
+
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -10,6 +12,6 @@ logging.basicConfig(
     ]
 )
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("uvicorn.error")
 
 logger.info("logger started")

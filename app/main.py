@@ -7,5 +7,5 @@ if __name__ == "__main__":
         port=settings.API_PORT,
         host=settings.API_HOST,
         reload=True,
-        log_config=None
+        log_level="DEBUG" if settings.DEBUG else "INFO"
     )
