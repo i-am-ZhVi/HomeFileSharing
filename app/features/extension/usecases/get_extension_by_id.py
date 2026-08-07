@@ -2,7 +2,7 @@ from app.features.extension.repositories.interface import ExtensionRepository
 from app.infrastructure.db_models.extension_table import Extension
 
 
-class GetExtensionUseCase:
+class GetExtensionByIdUseCase:
     def __init__(self, repo: ExtensionRepository):
         self.repo = repo
 
