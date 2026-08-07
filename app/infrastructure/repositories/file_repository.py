@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from sqlalchemy import and_, insert, or_, select, true
+from sqlalchemy import and_, desc, insert, or_, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -15,50 +15,69 @@ class SQLAlchemyFileRepository(FileRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get(self, file_id: int | None, sub_name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None) -> File | list[File] | None:
+
+    async def get_by_id(self, id: int) -> File | None:
         logger.debug(
             "File repository: get files. Params: "
-            "file_id=%s, sub_name=%r, extension_id=%s, mime_type_id=%s, category_id=%s",
-            file_id, sub_name, extension_id, mime_type_id, category_id
+            f"file_id={id}."
         )
         try:
-            if file_id:
-                logger.info("file repository: ")
-                response = await self.session.execute(select(File)
-                    .where(File.id == file_id)
-                    .options(
-                        selectinload(File.category),
-                        selectinload(File.mime_type),
-                        selectinload(File.extension),
-                        selectinload(File.versions),))
-
-                result = response.scalar_one_or_none()
-
-                if result:
-                    logger.info(f"File repository: found file_id={result.id}")
-                else:
-                    logger.warning(f"File repository: file_id={file_id} not found")
-
-                return result
-
             response = await self.session.execute(select(File)
-                .where(and_(
-                    (File.name.contains(sub_name) if sub_name else true()),
-                    (File.extension_id == extension_id if extension_id else true()),
-                    (File.mime_type_id == mime_type_id if mime_type_id else true()),
-                    (File.category_id == category_id if category_id else true())
-                )).options(
+                .where(File.id == id)
+                .options(
                     selectinload(File.category),
                     selectinload(File.mime_type),
                     selectinload(File.extension),
-                    selectinload(File.versions),
-                ))
+                    selectinload(File.versions),))
 
-            result = list(response.scalars().all())
-            logger.info(f"File repository: found {len(result)} files matching filters")
+            result = response.scalar_one_or_none()
+
+            if result:
+                logger.info(f"File repository: found id={result.id}.")
+            else:
+                logger.warning(f"File repository: id={id} not found.")
+
             return result
         except SQLAlchemyError:
-            logger.exception("File repository: database error occurred during get operational workflow")
+            logger.exception("File repository: database error occurred during get operational workflow.")
+            raise
+
+    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None) -> list[File]:
+        logger.debug(
+            "File repository: get files. Params: "
+            f"sub_name={sub_name}, extension_id={extension_id}, mime_type_id={mime_type_id}, category_id={category_id}.",
+        )
+        try:
+            query = select(File).options(
+                selectinload(File.category),
+                selectinload(File.mime_type),
+                selectinload(File.extension),
+                selectinload(File.versions),
+            ).order_by(desc(File.created_at), desc(File.id))
+
+            filters = []
+
+            if sub_name:
+                filters.append(File.name.contains(sub_name))
+
+            if extension_id:
+                filters.append(File.extension_id == extension_id)
+
+            if mime_type_id:
+                filters.append(File.mime_type_id == mime_type_id)
+
+            if category_id:
+                filters.append(File.category_id == category_id)
+
+            query = query.where(and_(*filters))
+
+            response = await self.session.execute(query)
+
+            result = list(response.scalars().all())
+            logger.info(f"File repository: found {len(result)} files matching filters.")
+            return result
+        except SQLAlchemyError:
+            logger.exception("File repository: database error occurred during get operational workflow.")
             raise
 
 
