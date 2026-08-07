@@ -41,10 +41,10 @@ class SQLAlchemyFileRepository(FileRepository):
             logger.exception("File repository: database error occurred during get operational workflow.")
             raise
 
-    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None) -> list[File]:
+    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None) -> list[File]:
         logger.debug(
             "File repository: get files. Params: "
-            f"sub_name={sub_name}, extension_id={extension_id}, mime_type_id={mime_type_id}, category_id={category_id}.",
+            f"sub_name={sub_name}, extension_id={extension_id}, mime_type_id={mime_type_id}.",
         )
         try:
             query = select(File).options(
@@ -64,9 +64,6 @@ class SQLAlchemyFileRepository(FileRepository):
             if mime_type_id:
                 filters.append(File.mime_type_id == mime_type_id)
 
-            if category_id:
-                filters.append(File.category_id == category_id)
-
             query = query.where(and_(*filters))
 
             response = await self.session.execute(query)
@@ -79,16 +76,15 @@ class SQLAlchemyFileRepository(FileRepository):
             raise
 
 
-    async def create(self, name: str, extension_id: int | None, mime_type_id: int | None, category_id: int, password_hash: str | None) -> File | None:
+    async def create(self, name: str, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
         logger.debug("File repository: create file. Params: "
-            f"name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, category_id={category_id}, password_hash={password_hash}"
+            f"name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, password_hash={password_hash}"
         )
         try:
             file = File(
                 name=name,
                 extension_id=extension_id,
                 mime_type_id=mime_type_id,
-                category_id=category_id,
                 password_hash=password_hash
             )
 
@@ -104,10 +100,10 @@ class SQLAlchemyFileRepository(FileRepository):
             raise
 
 
-    async def update(self, file_id: int, name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None, password_hash: str | None) -> File | None:
+    async def update(self, file_id: int, name: str | None, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
         logger.info(
             "File repository: update file. Params: "
-            f"file_id={file_id}, name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, category_id={category_id}, password_hash={password_hash}"
+            f"file_id={file_id}, name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, password_hash={password_hash}"
         )
 
         try:
@@ -121,7 +117,6 @@ class SQLAlchemyFileRepository(FileRepository):
             if name: file.name = name
             if extension_id: file.extension_id = extension_id
             if mime_type_id: file.mime_type_id = mime_type_id
-            if category_id: file.category_id = category_id
             if password_hash: file.password_hash = password_hash
 
             await self.session.commit()

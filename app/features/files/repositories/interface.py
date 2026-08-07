@@ -10,13 +10,13 @@ class FileRepository(ABC):
         pass
 
     @abstractmethod
-    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None) -> list[File]:
+    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None) -> list[File]:
         pass
 
     @abstractmethod
-    async def create(self, name: str, extension_id: int | None, mime_type_id: int | None, category_id: int, password_hash: str | None) -> File | None:
+    async def create(self, name: str, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
         pass
 
     @abstractmethod
-    async def update(self, file_id: int, name: str | None, extension_id: int | None, mime_type_id: int | None, category_id: int | None, password_hash: str | None) -> File | None:
+    async def update(self, file_id: int, name: str | None, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
         pass

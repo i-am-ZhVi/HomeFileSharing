@@ -64,7 +64,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             f"name={name}, category_id={category_id}."
         )
         try:
-            mime_type = MimeType(name=name)
+            mime_type = MimeType(name=name, category_id=category_id)
 
             self.session.add(mime_type)
             await self.session.commit()
