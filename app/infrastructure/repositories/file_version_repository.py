@@ -1,4 +1,4 @@
-from sqlalchemy import select, true
+from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -11,29 +11,42 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
     async def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get(self, version_id: str | None, file_id: int | None) -> FileVersion | list[FileVersion] | None:
+
+    async def get_by_id(self, id: int) -> FileVersion | None:
         logger.debug(
             "File version repository: get file versions. Params"
-            f"version_id={version_id}, file_id={file_id}."
+            f"id={id}."
         )
         try:
-            if version_id:
-                response = await self.session.execute(select(FileVersion)
-                    .where(FileVersion.id == version_id)
-                    .options(
-                        selectinload(FileVersion.file)))
-                result = response.scalar_one_or_none()
-
-                if result:
-                    logger.info(f"File version repository: found file version by id={version_id}.")
-                else:
-                    logger.warning(f"File version repository: file version by id={version_id} not found.")
-                return result
-
             response = await self.session.execute(select(FileVersion)
-                .where(FileVersion.file_id == file_id if file_id else true())
+                .where(FileVersion.id == id)
                 .options(
                     selectinload(FileVersion.file)))
+            result = response.scalar_one_or_none()
+
+            if result:
+                logger.info(f"File version repository: found file version by id={id}.")
+            else:
+                logger.warning(f"File version repository: file version by id={id} not found.")
+            return result
+
+        except SQLAlchemyError:
+            logger.exception("File version repository: database error occurred during get operational workflow.")
+            raise
+
+    async def get_list(self, file_id: int | None) -> list[FileVersion]:
+        logger.debug(
+            "File version repository: get file versions. Params"
+            f"file_id={file_id}."
+        )
+        try:
+            query = select(FileVersion).options(
+                selectinload(FileVersion.file)).order_by(desc(FileVersion.created_at))
+
+            if file_id:
+                query = query.where(FileVersion.file_id == file_id)
+
+            response = await self.session.execute(query)
 
             result = list(response.scalars().all())
 
@@ -43,7 +56,6 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
         except SQLAlchemyError:
             logger.exception("File version repository: database error occurred during get operational workflow.")
             raise
-
 
 
     async def create(self, version_uuid: str, file_id: int, version: str | None, bytes: int, checksum: str) -> FileVersion | None:
