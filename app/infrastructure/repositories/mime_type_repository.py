@@ -1,9 +1,10 @@
-from sqlalchemy import select, true
+from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from app.core.logger import logger
 from app.features.mime_types.repositories.interface import MimeTypeRepository
+from app.infrastructure.db_models.category_table import Category
 from app.infrastructure.db_models.mime_type_table import MimeType
 
 
@@ -11,25 +12,41 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get(self, mime_type_id: int | None, sub_name: str | None, category_id: int | None) -> MimeType | list[MimeType] | None:
+    async def get_by_id(self, id: int) -> MimeType | None:
         logger.debug(
-            "MimeType repository: get mime types. Params: "
-            f"mime_type_id={mime_type_id}, sub_name={sub_name}."
+            "MimeType repository: get mime type by id. Params: "
+            f"id={id}."
         )
         try:
-            if mime_type_id:
-                response = await self.session.execute(select(MimeType).where(MimeType.id == mime_type_id))
-                result = response.scalar_one_or_none()
+            response = await self.session.execute(select(MimeType).where(MimeType.id == id))
+            result = response.scalar_one_or_none()
 
-                if result:
-                    logger.info(f"MimeType repository: found mime type id={result.id}.")
-                else:
-                    logger.warning(f"MimeType repository: mime type id={mime_type_id} not found.")
+            if result:
+                logger.info(f"MimeType repository: found id={result.id}.")
+            else:
+                logger.warning(f"MimeType repository: id={id} not found.")
 
-                return result
+            return result
 
-            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.files))
-                .where(MimeType.name.contains(sub_name) if sub_name else true()))
+        except SQLAlchemyError:
+            logger.exception("MimeType repository: database error coccurred during get operation workflow.")
+            raise
+
+    async def get_list(self, sub_name: str | None, category_id: int | None) -> MimeType | list[MimeType] | None:
+        logger.debug(
+            "MimeType repository: get mime types. Params: "
+            f"sub_name={sub_name}, category_id={category_id}."
+        )
+        try:
+            query = select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).order_by(desc(MimeType.created_at), desc(MimeType.id))
+
+            if sub_name:
+                query = query.where(MimeType.name.contains(sub_name))
+
+            if category_id:
+                query = query.join(MimeType.category).where(Category.id == category_id)
+
+            response = await self.session.execute(query)
 
             result = list(response.scalars().all())
 
