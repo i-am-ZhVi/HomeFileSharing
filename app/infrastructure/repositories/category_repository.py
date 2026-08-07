@@ -2,6 +2,8 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+from infrastructure.db_models.extension_table import Extension
+from infrastructure.db_models.file_table import File
 from core.logger import logger
 from features.category.repositories.interface import CategoryRepository
 from infrastructure.db_models.category_table import Category
@@ -18,7 +20,8 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"id={id}."
         )
         try:
-            response = await self.session.execute(select(Category).where(Category.id == id).options(selectinload(Category.mime_types)))
+            response = await self.session.execute(select(Category).where(Category.id == id)
+                .options(selectinload(Category.mime_types).selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions)))
             result = response.scalar_one_or_none()
 
             if result:
@@ -37,7 +40,9 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"sub_name={sub_name}, mime_type_id={mime_type_id}."
         )
         try:
-            query = select(Category).options(selectinload(Category.mime_types)).order_by(desc(Category.created_at), desc(Category.id))
+            query = select(Category).options(
+                selectinload(Category.mime_types).selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions)
+            ).order_by(desc(Category.created_at), desc(Category.id))
 
             if sub_name:
                 query = query.where(Category.name.contains(sub_name))
@@ -82,7 +87,8 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             f"category_id={category_id}, category_name={category_name}."
         )
         try:
-            response = await self.session.execute(select(Category).where(Category.id == category_id).options(selectinload(Category.mime_types)))
+            response = await self.session.execute(select(Category).where(Category.id == category_id)
+                .options(selectinload(Category.mime_types).selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions)))
 
             category = response.scalar_one_or_none()
             if not category:

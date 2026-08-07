@@ -14,10 +14,10 @@ router = APIRouter(prefix="/mime_types", tags=["Mime types"])
 
 
 @router.get("/", response_model=list[MimeTypeResponse])
-async def get_list(sub_name: str | None = None, category_id: int | None = None, session: AsyncSession = Depends(get_db_session)):
+async def get_list(sub_name: str | None = None, extension_id: int | None = None, category_id: int | None = None, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyMimeTypeRepository(session)
     usecase = GetMimeTypeListUseCase(repo)
-    response = await usecase.execute(sub_name, category_id)
+    response = await usecase.execute(sub_name, extension_id=extension_id, category_id=category_id)
 
     return [MimeTypeResponse.model_validate(mime_type, from_attributes=True) for mime_type in response]
 

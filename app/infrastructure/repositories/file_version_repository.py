@@ -2,6 +2,9 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+from infrastructure.db_models.extension_table import Extension
+from infrastructure.db_models.file_table import File
+from infrastructure.db_models.mime_type_table import MimeType
 from core.logger import logger
 from features.file_versions.repositories.interface import FileVersionRepository
 from infrastructure.db_models.file_version_table import FileVersion
@@ -21,7 +24,7 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
             response = await self.session.execute(select(FileVersion)
                 .where(FileVersion.id == id)
                 .options(
-                    selectinload(FileVersion.file)))
+                    selectinload(FileVersion.file).selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category)))
             result = response.scalar_one_or_none()
 
             if result:
@@ -41,7 +44,7 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
         )
         try:
             query = select(FileVersion).options(
-                selectinload(FileVersion.file)).order_by(desc(FileVersion.created_at))
+                selectinload(FileVersion.file).selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category)).order_by(desc(FileVersion.created_at))
 
             if file_id:
                 query = query.where(FileVersion.file_id == file_id)
@@ -94,7 +97,9 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
         )
         try:
 
-            response = await self.session.execute(select(FileVersion).where(FileVersion.id == version_uuid))
+            response = await self.session.execute(select(FileVersion)
+                .options(selectinload(FileVersion.file).selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category))
+                .where(FileVersion.id == version_uuid))
             file_version = response.scalar_one_or_none()
             if not file_version:
                 logger.warning(f"File version repository: version_uuid={version_uuid} not found")

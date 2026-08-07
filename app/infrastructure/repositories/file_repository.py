@@ -6,6 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from infrastructure.db_models.extension_table import Extension
 from infrastructure.db_models.mime_type_table import MimeType
 from core.logger import logger
 from features.files.repositories.interface import FileRepository
@@ -26,8 +27,7 @@ class SQLAlchemyFileRepository(FileRepository):
             response = await self.session.execute(select(File)
                 .where(File.id == id)
                 .options(
-                    selectinload(File.mime_type).selectinload(MimeType.category),
-                    selectinload(File.extension),
+                    selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
                     selectinload(File.versions),))
 
             result = response.scalar_one_or_none()
@@ -42,15 +42,14 @@ class SQLAlchemyFileRepository(FileRepository):
             logger.exception("File repository: database error occurred during get operational workflow.")
             raise
 
-    async def get_list(self, sub_name: str | None, extension_id: int | None, mime_type_id: int | None) -> list[File]:
+    async def get_list(self, sub_name: str | None, extension_id: int | None) -> list[File]:
         logger.debug(
             "File repository: get files. Params: "
-            f"sub_name={sub_name}, extension_id={extension_id}, mime_type_id={mime_type_id}.",
+            f"sub_name={sub_name}, extension_id={extension_id}.",
         )
         try:
             query = select(File).options(
-                selectinload(File.mime_type).selectinload(MimeType.category),
-                selectinload(File.extension),
+                selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
                 selectinload(File.versions),
             ).order_by(desc(File.created_at), desc(File.id))
 
@@ -61,9 +60,6 @@ class SQLAlchemyFileRepository(FileRepository):
 
             if extension_id:
                 filters.append(File.extension_id == extension_id)
-
-            if mime_type_id:
-                filters.append(File.mime_type_id == mime_type_id)
 
             query = query.where(and_(*filters))
 
@@ -77,15 +73,14 @@ class SQLAlchemyFileRepository(FileRepository):
             raise
 
 
-    async def create(self, name: str, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
+    async def create(self, name: str, extension_id: int | None, password_hash: str | None) -> File | None:
         logger.debug("File repository: create file. Params: "
-            f"name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, password_hash={password_hash}"
+            f"name={name}, extension_id={extension_id}, password_hash={password_hash}"
         )
         try:
             file = File(
                 name=name,
                 extension_id=extension_id,
-                mime_type_id=mime_type_id,
                 password_hash=password_hash
             )
 
@@ -94,8 +89,7 @@ class SQLAlchemyFileRepository(FileRepository):
             await self.session.refresh(file)
 
             new_file = await self.session.execute(select(File).where(File.id == file.id).options(
-                selectinload(File.mime_type).selectinload(MimeType.category),
-                selectinload(File.extension),
+                selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
                 selectinload(File.versions),
             ))
 
@@ -107,16 +101,15 @@ class SQLAlchemyFileRepository(FileRepository):
             raise
 
 
-    async def update(self, file_id: int, name: str | None, extension_id: int | None, mime_type_id: int | None, password_hash: str | None) -> File | None:
+    async def update(self, file_id: int, name: str | None, extension_id: int | None, password_hash: str | None) -> File | None:
         logger.info(
             "File repository: update file. Params: "
-            f"file_id={file_id}, name={name}, extension_id={extension_id}, mime_type_id={mime_type_id}, password_hash={password_hash}"
+            f"file_id={file_id}, name={name}, extension_id={extension_id}, password_hash={password_hash}"
         )
 
         try:
             response = await self.session.execute(select(File).options(
-                selectinload(File.mime_type).selectinload(MimeType.category),
-                selectinload(File.extension),
+                selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
                 selectinload(File.versions),
             ).where(File.id == file_id))
             file = response.scalar_one_or_none()
@@ -127,7 +120,6 @@ class SQLAlchemyFileRepository(FileRepository):
 
             if name: file.name = name
             if extension_id: file.extension_id = extension_id
-            if mime_type_id: file.mime_type_id = mime_type_id
             if password_hash: file.password_hash = password_hash
 
             await self.session.commit()

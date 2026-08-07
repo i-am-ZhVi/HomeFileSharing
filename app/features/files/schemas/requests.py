@@ -8,4 +8,3 @@ class FileResponse(BaseModel):
     id: int
     name: str
     extension: ExtensionResponse
-    mime_type: MimeTypeResponse

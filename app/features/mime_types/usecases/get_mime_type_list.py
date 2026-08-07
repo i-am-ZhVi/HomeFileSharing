@@ -6,5 +6,5 @@ class GetMimeTypeListUseCase:
     def __init__(self, repo: MimeTypeRepository):
         self.repo = repo
 
-    async def execute(self, sub_name: str | None, category_id: int | None) -> list[MimeType]:
-        return await self.repo.get_list(sub_name=sub_name, category_id=category_id)
+    async def execute(self, sub_name: str | None, extension_id: int | None, category_id: int | None) -> list[MimeType]:
+        return await self.repo.get_list(sub_name=sub_name, extension_id=extension_id, category_id=category_id)

@@ -2,6 +2,8 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+from infrastructure.db_models.extension_table import Extension
+from infrastructure.db_models.file_table import File
 from core.logger import logger
 from features.mime_types.repositories.interface import MimeTypeRepository
 from infrastructure.db_models.category_table import Category
@@ -18,7 +20,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             f"id={id}."
         )
         try:
-            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).where(MimeType.id == id))
+            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions), selectinload(MimeType.category)).where(MimeType.id == id))
             result = response.scalar_one_or_none()
 
             if result:
@@ -32,16 +34,19 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             logger.exception("MimeType repository: database error coccurred during get operation workflow.")
             raise
 
-    async def get_list(self, sub_name: str | None, category_id: int | None) -> list[MimeType]:
+    async def get_list(self, sub_name: str | None, extension_id: int | None, category_id: int | None) -> list[MimeType]:
         logger.debug(
             "MimeType repository: get mime types. Params: "
-            f"sub_name={sub_name}, category_id={category_id}."
+            f"sub_name={sub_name}, extension_id={extension_id}, category_id={category_id}."
         )
         try:
-            query = select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).order_by(desc(MimeType.created_at), desc(MimeType.id))
+            query = select(MimeType).options(selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions), selectinload(MimeType.category)).order_by(desc(MimeType.created_at), desc(MimeType.id))
 
             if sub_name:
                 query = query.where(MimeType.name.contains(sub_name))
+
+            if extension_id:
+                query = query.join(MimeType.extensions).where(Extension.id == extension_id)
 
             if category_id:
                 query = query.join(MimeType.category).where(Category.id == category_id)
@@ -83,7 +88,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             f"mime_type_id={mime_type_id}, name={name}, category_id={category_id}."
         )
         try:
-            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).where(MimeType.id == mime_type_id))
+            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions), selectinload(MimeType.category)).where(MimeType.id == mime_type_id))
 
             mime_type = response.scalar_one_or_none()
             if not mime_type:

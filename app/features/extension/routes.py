@@ -13,11 +13,11 @@ from infrastructure.repositories.extension_repository import SQLAlchemyExtension
 router = APIRouter(prefix="/extensions", tags=["Extensions"])
 
 @router.get("/", response_model=list[ExtensionResponse])
-async def get_list(sub_name: str | None = None, session: AsyncSession = Depends(get_db_session)):
+async def get_list(sub_name: str | None = None, mime_type_id: int | None = None, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyExtensionRepository(session)
     usecase = GetExtensionListUseCase(repo)
 
-    response = await usecase.execute(sub_name)
+    response = await usecase.execute(sub_name, mime_type_id)
 
     return [ExtensionResponse.model_validate(extension, from_attributes=True) for extension in response]
 
@@ -33,20 +33,20 @@ async def get_by_id(id: int, session: AsyncSession = Depends(get_db_session)):
 
 
 @router.post("/", response_model=ExtensionResponse)
-async def create(name: str, session: AsyncSession = Depends(get_db_session)):
+async def create(name: str, mime_type_id: int, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyExtensionRepository(session)
     usecase = CreateExtensionUseCase(repo)
 
-    response = await usecase.execute(name)
+    response = await usecase.execute(name, mime_type_id)
 
     return ExtensionResponse.model_validate(response, from_attributes=True)
 
 
 @router.patch("/{id}", response_model=list[ExtensionResponse])
-async def update(id: int, name: str, session: AsyncSession = Depends(get_db_session)):
+async def update(id: int, name: str | None = None, mime_type_id: int | None = None, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyExtensionRepository(session)
     usecase = UpdateExtensionUseCase(repo)
 
-    response = await usecase.execute(id, name)
+    response = await usecase.execute(id, name, mime_type_id)
 
     return ExtensionResponse.model_validate(response, from_attributes=True)

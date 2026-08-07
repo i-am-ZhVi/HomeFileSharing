@@ -2,6 +2,8 @@ from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+from infrastructure.db_models.file_table import File
+from infrastructure.db_models.mime_type_table import MimeType
 from core.logger import logger
 from features.extension.repositories.interface import ExtensionRepository
 from infrastructure.db_models.extension_table import Extension
@@ -17,7 +19,8 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             f"id={id}."
         )
         try:
-            response = await self.session.execute(select(Extension).where(Extension.id == id).options(selectinload(Extension.files)))
+            response = await self.session.execute(select(Extension).where(Extension.id == id).options(
+                selectinload(Extension.files).selectinload(File.versions), selectinload(Extension.mime_type).selectinload(MimeType.category)))
             result = response.scalar_one_or_none()
 
             if result:
@@ -30,16 +33,21 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             logger.exception("Extension repository: database error coccurred during get operation workflow.")
             raise
 
-    async def get_list(self, sub_name: str | None) -> list[Extension]:
+    async def get_list(self, sub_name: str | None, mime_type_id: int | None) -> list[Extension]:
         logger.debug(
             "Extension repository: get list extensions. Params: "
-            f"sub_name={sub_name}."
+            f"sub_name={sub_name}, mime_type_id={mime_type_id}."
         )
         try:
-            query = select(Extension).options(selectinload(Extension.files)).order_by(desc(Extension.created_at), desc(Extension.id))
+            query = select(Extension).options(
+                selectinload(Extension.files).selectinload(File.versions), selectinload(Extension.mime_type).selectinload(MimeType.category)
+            ).order_by(desc(Extension.created_at), desc(Extension.id))
 
             if sub_name:
                 query = query.where(Extension.name.contains(sub_name))
+
+            if mime_type_id:
+                query = query.where(Extension.mime_type_id == mime_type_id)
 
             response = await self.session.execute(query)
             result = list(response.scalars().all())
@@ -51,13 +59,13 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             logger.exception("Extension repository: database error coccurred during get operation workflow.")
             raise
 
-    async def create(self, extension_name: str) -> Extension | None:
+    async def create(self, extension_name: str, mime_type_id: int) -> Extension | None:
         logger.debug(
             "Extension repository: create extension. Params: "
             f"extension_name={extension_name}."
         )
         try:
-            extension = Extension(name=extension_name)
+            extension = Extension(name=extension_name, mime_type_id=mime_type_id)
 
             self.session.add(extension)
             await self.session.commit()
@@ -70,7 +78,7 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             logger.exception("Extension repository: database error occurred during create operation workflow.")
             raise
 
-    async def update(self, extension_id: int, extension_name: str) -> Extension | None:
+    async def update(self, extension_id: int, extension_name: str | None, mime_type_id: int | None) -> Extension | None:
         logger.debug(
             "Extension repository: update extension. Params: "
             f"extension_id={extension_id}, extension_name={extension_name}."
@@ -83,7 +91,8 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
                 logger.warning(f"Extension repository: extension_id={extension_id} not found")
                 return None
 
-            extension.name = extension_name
+            if extension_name: extension.name = extension_name
+            if mime_type_id: extension.mime_type_id = mime_type_id
 
             await self.session.commit()
             await self.session.refresh(extension)
