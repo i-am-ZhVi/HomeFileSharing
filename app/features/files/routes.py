@@ -4,6 +4,8 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
+from features.file_versions.usecases.create_file_version import CreateFileVersionUseCase
+from infrastructure.repositories.file_version_repository import SQLAlchemyFileVersionRepository
 from core.config import settings
 from core.logger import logger
 from features.category.usecases.create_category import CreateCategoryUseCase
@@ -119,6 +121,13 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
 
 
     response = await usecase.execute(name=file.filename.replace(f".{extension}", ""), extension_id=extension_id, password_hash=info.password)
+
+    if not response:
+        return None
+
+    file_version_repo = SQLAlchemyFileVersionRepository(session)
+    file_version_create_usecase = CreateFileVersionUseCase(file_version_repo)
+    await file_version_create_usecase.execute(file_id=response.id, version="v1.0", file=file, category_name=response.extension.mime_type.category.name)
 
     return FileResponse.model_validate(response, from_attributes=True)
 

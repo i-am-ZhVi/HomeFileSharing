@@ -1,3 +1,4 @@
+from uuid import UUID
 from sqlalchemy import desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -61,7 +62,7 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
             raise
 
 
-    async def create(self, version_uuid: str, file_id: int, version: str | None, bytes: int, checksum: str) -> FileVersion | None:
+    async def create(self, version_uuid: UUID, file_id: int, version: str | None, bytes: int, checksum: str) -> FileVersion | None:
         logger.debug(
             "File version repository: create file version. Params"
             f"uuid={version_uuid}, file_id={file_id}, version={version}, bytes={bytes}, checksum={checksum}."

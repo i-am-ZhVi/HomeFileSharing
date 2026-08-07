@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     UPLOAD_DIRECTORY: str
     OTHER_FILES_DIRECTORY_NAME: str
 
+    FILE_CRYPT: bool
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

@@ -1,6 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.status import HTTP_404_NOT_FOUND
 
+from features.files.usecases.get_file_by_id import GetFileByIdUseCase
+from infrastructure.repositories.file_repository import SQLAlchemyFileRepository
 from features.file_versions.usecases.create_file_version import CreateFileVersionUseCase
 from features.file_versions.usecases.get_file_version_by_id import GetFileVersionByIdUseCase
 from features.file_versions.usecases.update_file_version import UpdateFileVersionUseCase
@@ -33,12 +36,17 @@ async def get_by_id(version_uuid: str, session: AsyncSession = Depends(get_db_se
 
 
 @router.post("/", response_model=FileVersionResponse | None)
-async def create(version_uuid: str, file_id: int, version: str | None, bytes: int, checksum: str, session: AsyncSession = Depends(get_db_session)):
+async def create(file_id: int, version: str | None, file: UploadFile, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyFileVersionRepository(session)
     usecase = CreateFileVersionUseCase(repo)
 
-    response = await usecase.execute(version_uuid=version_uuid,
-        file_id=file_id, version=version, bytes=bytes, checksum=checksum)
+    file_repo = SQLAlchemyFileRepository(session)
+    file_get_by_id_usecase = GetFileByIdUseCase(file_repo)
+    file_db = await file_get_by_id_usecase.execute(file_id)
+    if not file_db:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"File by id {file_id} not found.")
+
+    response = await usecase.execute(file_id=file_id, version=version, file=file, category_name=file_db.extension.mime_type.category.name)
 
     return FileVersionResponse.model_validate(response, from_attributes=True)
 

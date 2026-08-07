@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from uuid import UUID
 
 from infrastructure.db_models.file_version_table import FileVersion
 
@@ -13,7 +14,7 @@ class FileVersionRepository(ABC):
         pass
 
     @abstractmethod
-    async def create(self, version_uuid: str, file_id: int, version: str | None, bytes: int, checksum: str) -> FileVersion | None:
+    async def create(self, version_uuid: UUID, file_id: int, version: str | None, bytes: int, checksum: str) -> FileVersion | None:
         pass
 
     @abstractmethod
