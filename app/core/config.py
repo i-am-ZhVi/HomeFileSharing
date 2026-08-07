@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     API_HOST: str
     API_PORT: int
 
+    UPLOAD_DIRECTORY: str
+    OTHER_FILES_DIRECTORY_NAME: str
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
