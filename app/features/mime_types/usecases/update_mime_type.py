@@ -2,7 +2,7 @@ from features.mime_types.repositories.interface import MimeTypeRepository
 from infrastructure.db_models.mime_type_table import MimeType
 
 
-class GetMimeTypeUseCase:
+class UpdateMimeTypeUseCase:
     def __init__(self, repo: MimeTypeRepository):
         self.repo = repo
 

@@ -539,3 +539,1322 @@ WHERE file.extension_id IN ($1::INTEGER)
 2026-08-07 15:00:52,582 - INFO - Waiting for application shutdown.
 2026-08-07 15:00:52,583 - INFO - Application shutdown complete.
 2026-08-07 15:00:52,583 - INFO - Finished server process [120181]
+2026-08-07 15:09:24,533 - INFO - logger started
+2026-08-07 15:09:24,576 - INFO - Started server process [126827]
+2026-08-07 15:09:24,576 - INFO - Waiting for application startup.
+2026-08-07 15:09:24,576 - INFO - Application startup complete.
+2026-08-07 15:09:36,523 - INFO - 127.0.0.1:52134 - "GET /api/docs HTTP/1.1" 200
+2026-08-07 15:09:36,819 - INFO - 127.0.0.1:52134 - "GET /api/openapi.json HTTP/1.1" 200
+2026-08-07 15:09:42,201 - INFO - 127.0.0.1:58962 - "GET /api/docs HTTP/1.1" 200
+2026-08-07 15:09:42,439 - INFO - 127.0.0.1:58962 - "GET /api/openapi.json HTTP/1.1" 200
+2026-08-07 15:10:12,574 - INFO - Shutting down
+2026-08-07 15:10:12,675 - INFO - Waiting for application shutdown.
+2026-08-07 15:10:12,676 - INFO - Application shutdown complete.
+2026-08-07 15:10:12,676 - INFO - Finished server process [126827]
+2026-08-07 15:10:13,510 - INFO - logger started
+2026-08-07 15:10:28,158 - INFO - logger started
+2026-08-07 15:10:28,220 - INFO - Started server process [127759]
+2026-08-07 15:10:28,220 - INFO - Waiting for application startup.
+2026-08-07 15:10:28,221 - INFO - Application startup complete.
+2026-08-07 15:10:30,640 - INFO - 127.0.0.1:35816 - "GET /api/docs HTTP/1.1" 200
+2026-08-07 15:10:30,964 - INFO - 127.0.0.1:35816 - "GET /api/openapi.json HTTP/1.1" 200
+2026-08-07 15:10:43,414 - INFO - Shutting down
+2026-08-07 15:10:43,515 - INFO - Waiting for application shutdown.
+2026-08-07 15:10:43,515 - INFO - Application shutdown complete.
+2026-08-07 15:10:43,515 - INFO - Finished server process [127759]
+2026-08-07 15:10:44,297 - INFO - logger started
+2026-08-07 15:10:44,353 - INFO - Started server process [128070]
+2026-08-07 15:10:44,354 - INFO - Waiting for application startup.
+2026-08-07 15:10:44,354 - INFO - Application startup complete.
+2026-08-07 15:10:46,965 - INFO - Shutting down
+2026-08-07 15:10:47,066 - INFO - Waiting for application shutdown.
+2026-08-07 15:10:47,067 - INFO - Application shutdown complete.
+2026-08-07 15:10:47,067 - INFO - Finished server process [128070]
+2026-08-07 15:10:47,881 - INFO - logger started
+2026-08-07 15:10:47,939 - INFO - Started server process [128140]
+2026-08-07 15:10:47,939 - INFO - Waiting for application startup.
+2026-08-07 15:10:47,940 - INFO - Application startup complete.
+2026-08-07 15:10:50,398 - INFO - 127.0.0.1:37902 - "GET /api/docs HTTP/1.1" 200
+2026-08-07 15:10:50,695 - INFO - 127.0.0.1:37902 - "GET /api/openapi.json HTTP/1.1" 200
+2026-08-07 15:12:54,172 - INFO - select pg_catalog.version()
+2026-08-07 15:12:54,173 - INFO - [raw sql] ()
+2026-08-07 15:12:54,176 - INFO - select current_schema()
+2026-08-07 15:12:54,176 - INFO - [raw sql] ()
+2026-08-07 15:12:54,179 - INFO - show standard_conforming_strings
+2026-08-07 15:12:54,179 - INFO - [raw sql] ()
+2026-08-07 15:12:54,181 - INFO - BEGIN (implicit)
+2026-08-07 15:12:54,184 - INFO - INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id
+2026-08-07 15:12:54,185 - INFO - [generated in 0.00054s] ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 10, 47, 787152), datetime.datetime(2026, 8, 7, 15, 10, 47, 787533))
+2026-08-07 15:12:54,233 - INFO - ROLLBACK
+2026-08-07 15:12:54,234 - ERROR - MimeType repository: database error occurred during create operation workflow.
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.NotNullViolationError: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/infrastructure/repositories/mime_type_repository.py", line 70, in create
+    await self.session.commit()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/session.py", line 999, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2035, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1316, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1290, in _prepare_impl
+    self.session.flush()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4353, in flush
+    self._flush(objects)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4449, in _flush
+    flush_context.execute()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+[SQL: INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id]
+[parameters: ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 10, 47, 787152), datetime.datetime(2026, 8, 7, 15, 10, 47, 787533))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-07 15:12:54,244 - INFO - 127.0.0.1:36764 - "POST /api/mime_types/?name=image%2Fjpeg&category_id=1 HTTP/1.1" 500
+2026-08-07 15:12:54,244 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.NotNullViolationError: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 37, in create
+    response = await usecase.execute(name, category_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/usecases/create_mime_type.py", line 10, in execute
+    return await self.repo.create(name=name, category_id=category_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/infrastructure/repositories/mime_type_repository.py", line 70, in create
+    await self.session.commit()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/session.py", line 999, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2035, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1316, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1290, in _prepare_impl
+    self.session.flush()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4353, in flush
+    self._flush(objects)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4449, in _flush
+    flush_context.execute()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, image/jpeg, null, 2026-08-07 15:10:47.787152, 2026-08-07 15:10:47.787533).
+[SQL: INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id]
+[parameters: ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 10, 47, 787152), datetime.datetime(2026, 8, 7, 15, 10, 47, 787533))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-07 15:13:19,285 - INFO - Shutting down
+2026-08-07 15:13:19,386 - INFO - Waiting for application shutdown.
+2026-08-07 15:13:19,386 - INFO - Application shutdown complete.
+2026-08-07 15:13:19,387 - INFO - Finished server process [128140]
+2026-08-07 15:16:24,456 - INFO - logger started
+2026-08-07 15:16:24,511 - INFO - Started server process [133570]
+2026-08-07 15:16:24,511 - INFO - Waiting for application startup.
+2026-08-07 15:16:24,512 - INFO - Application startup complete.
+2026-08-07 15:16:28,639 - DEBUG - MimeType repository: create mime type. Params: name=image/jpeg, category_id=1.
+2026-08-07 15:16:28,672 - INFO - select pg_catalog.version()
+2026-08-07 15:16:28,672 - INFO - [raw sql] ()
+2026-08-07 15:16:28,678 - INFO - select current_schema()
+2026-08-07 15:16:28,679 - INFO - [raw sql] ()
+2026-08-07 15:16:28,683 - INFO - show standard_conforming_strings
+2026-08-07 15:16:28,684 - INFO - [raw sql] ()
+2026-08-07 15:16:28,687 - INFO - BEGIN (implicit)
+2026-08-07 15:16:28,694 - INFO - INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id
+2026-08-07 15:16:28,694 - INFO - [generated in 0.00085s] ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 16, 24, 377889), datetime.datetime(2026, 8, 7, 15, 16, 24, 378221))
+2026-08-07 15:16:28,702 - INFO - ROLLBACK
+2026-08-07 15:16:28,704 - ERROR - MimeType repository: database error occurred during create operation workflow.
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.NotNullViolationError: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/infrastructure/repositories/mime_type_repository.py", line 70, in create
+    await self.session.commit()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/session.py", line 999, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2035, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1316, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1290, in _prepare_impl
+    self.session.flush()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4353, in flush
+    self._flush(objects)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4449, in _flush
+    flush_context.execute()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+[SQL: INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id]
+[parameters: ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 16, 24, 377889), datetime.datetime(2026, 8, 7, 15, 16, 24, 378221))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-07 15:16:28,721 - INFO - 127.0.0.1:47126 - "POST /api/mime_types/?name=image%2Fjpeg&category_id=1 HTTP/1.1" 500
+2026-08-07 15:16:28,723 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/asyncpg/prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.NotNullViolationError: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.IntegrityError: <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 37, in create
+    response = await usecase.execute(name, category_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/usecases/create_mime_type.py", line 10, in execute
+    return await self.repo.create(name=name, category_id=category_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/infrastructure/repositories/mime_type_repository.py", line 70, in create
+    await self.session.commit()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/ext/asyncio/session.py", line 999, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2035, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1316, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1290, in _prepare_impl
+    self.session.flush()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4353, in flush
+    self._flush(objects)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4488, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 4449, in _flush
+    flush_context.execute()
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.IntegrityError: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.NotNullViolationError'>: значение NULL в столбце "category_id" отношения "mime_type" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (2, image/jpeg, null, 2026-08-07 15:16:24.377889, 2026-08-07 15:16:24.378221).
+[SQL: INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id]
+[parameters: ('image/jpeg', None, datetime.datetime(2026, 8, 7, 15, 16, 24, 377889), datetime.datetime(2026, 8, 7, 15, 16, 24, 378221))]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-07 15:17:22,816 - INFO - Shutting down
+2026-08-07 15:17:22,917 - INFO - Waiting for application shutdown.
+2026-08-07 15:17:22,917 - INFO - Application shutdown complete.
+2026-08-07 15:17:22,917 - INFO - Finished server process [133570]
+2026-08-07 15:17:23,667 - INFO - logger started
+2026-08-07 15:17:23,721 - INFO - Started server process [134308]
+2026-08-07 15:17:23,721 - INFO - Waiting for application startup.
+2026-08-07 15:17:23,722 - INFO - Application startup complete.
+2026-08-07 15:17:32,360 - INFO - Shutting down
+2026-08-07 15:17:32,460 - INFO - Waiting for application shutdown.
+2026-08-07 15:17:32,461 - INFO - Application shutdown complete.
+2026-08-07 15:17:32,461 - INFO - Finished server process [134308]
+2026-08-07 15:17:33,267 - INFO - logger started
+2026-08-07 15:17:33,326 - INFO - Started server process [134447]
+2026-08-07 15:17:33,327 - INFO - Waiting for application startup.
+2026-08-07 15:17:33,327 - INFO - Application startup complete.
+2026-08-07 15:17:37,246 - INFO - Shutting down
+2026-08-07 15:17:37,347 - INFO - Waiting for application shutdown.
+2026-08-07 15:17:37,348 - INFO - Application shutdown complete.
+2026-08-07 15:17:37,348 - INFO - Finished server process [134447]
+2026-08-07 15:17:38,272 - INFO - logger started
+2026-08-07 15:17:38,328 - INFO - Started server process [134530]
+2026-08-07 15:17:38,328 - INFO - Waiting for application startup.
+2026-08-07 15:17:38,328 - INFO - Application startup complete.
+2026-08-07 15:17:47,974 - INFO - Shutting down
+2026-08-07 15:17:48,075 - INFO - Waiting for application shutdown.
+2026-08-07 15:17:48,076 - INFO - Application shutdown complete.
+2026-08-07 15:17:48,076 - INFO - Finished server process [134530]
+2026-08-07 15:17:48,901 - INFO - logger started
+2026-08-07 15:17:48,961 - INFO - Started server process [134766]
+2026-08-07 15:17:48,961 - INFO - Waiting for application startup.
+2026-08-07 15:17:48,961 - INFO - Application startup complete.
+2026-08-07 15:18:07,649 - INFO - Shutting down
+2026-08-07 15:18:07,750 - INFO - Waiting for application shutdown.
+2026-08-07 15:18:07,751 - INFO - Application shutdown complete.
+2026-08-07 15:18:07,751 - INFO - Finished server process [134766]
+2026-08-07 15:18:08,578 - INFO - logger started
+2026-08-07 15:18:08,635 - INFO - Started server process [135005]
+2026-08-07 15:18:08,635 - INFO - Waiting for application startup.
+2026-08-07 15:18:08,636 - INFO - Application startup complete.
+2026-08-07 15:18:29,625 - INFO - Shutting down
+2026-08-07 15:18:29,726 - INFO - Waiting for application shutdown.
+2026-08-07 15:18:29,726 - INFO - Application shutdown complete.
+2026-08-07 15:18:29,726 - INFO - Finished server process [135005]
+2026-08-07 15:18:30,539 - INFO - logger started
+2026-08-07 15:18:30,595 - INFO - Started server process [135275]
+2026-08-07 15:18:30,595 - INFO - Waiting for application startup.
+2026-08-07 15:18:30,595 - INFO - Application startup complete.
+2026-08-07 15:18:33,912 - INFO - Shutting down
+2026-08-07 15:18:34,013 - INFO - Waiting for application shutdown.
+2026-08-07 15:18:34,014 - INFO - Application shutdown complete.
+2026-08-07 15:18:34,014 - INFO - Finished server process [135275]
+2026-08-07 15:18:34,852 - INFO - logger started
+2026-08-07 15:18:34,913 - INFO - Started server process [135342]
+2026-08-07 15:18:34,914 - INFO - Waiting for application startup.
+2026-08-07 15:18:34,914 - INFO - Application startup complete.
+2026-08-07 15:19:25,653 - INFO - Shutting down
+2026-08-07 15:19:25,753 - INFO - Waiting for application shutdown.
+2026-08-07 15:19:25,754 - INFO - Application shutdown complete.
+2026-08-07 15:19:25,754 - INFO - Finished server process [135342]
+2026-08-07 15:19:26,599 - INFO - logger started
+2026-08-07 15:19:26,655 - INFO - Started server process [136029]
+2026-08-07 15:19:26,655 - INFO - Waiting for application startup.
+2026-08-07 15:19:26,655 - INFO - Application startup complete.
+2026-08-07 15:19:29,900 - DEBUG - MimeType repository: create mime type. Params: name=image/jpeg, category_id=1.
+2026-08-07 15:19:29,934 - INFO - select pg_catalog.version()
+2026-08-07 15:19:29,934 - INFO - [raw sql] ()
+2026-08-07 15:19:29,937 - INFO - select current_schema()
+2026-08-07 15:19:29,937 - INFO - [raw sql] ()
+2026-08-07 15:19:29,939 - INFO - show standard_conforming_strings
+2026-08-07 15:19:29,940 - INFO - [raw sql] ()
+2026-08-07 15:19:29,943 - INFO - BEGIN (implicit)
+2026-08-07 15:19:29,947 - INFO - INSERT INTO mime_type (name, category_id, created_at, updated_at) VALUES ($1::VARCHAR, $2::INTEGER, $3::TIMESTAMP WITHOUT TIME ZONE, $4::TIMESTAMP WITHOUT TIME ZONE) RETURNING mime_type.id
+2026-08-07 15:19:29,947 - INFO - [generated in 0.00068s] ('image/jpeg', 1, datetime.datetime(2026, 8, 7, 15, 19, 26, 510922), datetime.datetime(2026, 8, 7, 15, 19, 26, 511371))
+2026-08-07 15:19:29,961 - INFO - COMMIT
+2026-08-07 15:19:29,967 - INFO - BEGIN (implicit)
+2026-08-07 15:19:29,972 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:19:29,972 - INFO - [generated in 0.00045s] (3,)
+2026-08-07 15:19:29,976 - INFO - MimeType repository: created mime type by id=3
+2026-08-07 15:19:29,981 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id = $1::INTEGER
+2026-08-07 15:19:29,981 - INFO - [generated in 0.00060s] (1,)
+2026-08-07 15:19:29,984 - INFO - ROLLBACK
+2026-08-07 15:19:29,985 - INFO - 127.0.0.1:45352 - "POST /api/mime_types/?name=image%2Fjpeg&category_id=1 HTTP/1.1" 500
+2026-08-07 15:19:29,986 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 39, in create
+    return MimeTypeResponse.model_validate(response, from_attributes=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/pydantic/main.py", line 732, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for MimeTypeResponse
+category
+  Error extracting attribute: MissingGreenlet: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s) [type=get_attribute_error, input_value=<infrastructure.db_models...bject at 0x7f1f94272300>, input_type=MimeType]
+    For further information visit https://errors.pydantic.dev/2.13/v/get_attribute_error
+2026-08-07 15:19:40,122 - INFO - Shutting down
+2026-08-07 15:19:40,223 - INFO - Waiting for application shutdown.
+2026-08-07 15:19:40,225 - INFO - Application shutdown complete.
+2026-08-07 15:19:40,226 - INFO - Finished server process [136029]
+2026-08-07 15:23:01,939 - INFO - logger started
+2026-08-07 15:23:01,994 - INFO - Started server process [139005]
+2026-08-07 15:23:01,994 - INFO - Waiting for application startup.
+2026-08-07 15:23:01,995 - INFO - Application startup complete.
+2026-08-07 15:23:47,606 - INFO - Shutting down
+2026-08-07 15:23:47,708 - INFO - Waiting for application shutdown.
+2026-08-07 15:23:47,708 - INFO - Application shutdown complete.
+2026-08-07 15:23:47,709 - INFO - Finished server process [139005]
+2026-08-07 15:23:48,556 - INFO - logger started
+2026-08-07 15:23:48,613 - INFO - Started server process [139594]
+2026-08-07 15:23:48,613 - INFO - Waiting for application startup.
+2026-08-07 15:23:48,614 - INFO - Application startup complete.
+2026-08-07 15:23:53,113 - INFO - 127.0.0.1:37316 - "GET /api/docs HTTP/1.1" 200
+2026-08-07 15:23:53,545 - INFO - 127.0.0.1:37316 - "GET /api/openapi.json HTTP/1.1" 200
+2026-08-07 15:23:57,361 - DEBUG - MimeType repository: get mime types. Params: sub_name=None, category_id=None.
+2026-08-07 15:23:57,396 - INFO - select pg_catalog.version()
+2026-08-07 15:23:57,396 - INFO - [raw sql] ()
+2026-08-07 15:23:57,399 - INFO - select current_schema()
+2026-08-07 15:23:57,399 - INFO - [raw sql] ()
+2026-08-07 15:23:57,402 - INFO - show standard_conforming_strings
+2026-08-07 15:23:57,402 - INFO - [raw sql] ()
+2026-08-07 15:23:57,404 - INFO - BEGIN (implicit)
+2026-08-07 15:23:57,410 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type ORDER BY mime_type.created_at DESC, mime_type.id DESC
+2026-08-07 15:23:57,410 - INFO - [generated in 0.00034s] ()
+2026-08-07 15:23:57,418 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-07 15:23:57,418 - INFO - [generated in 0.00064s] (1,)
+2026-08-07 15:23:57,424 - INFO - SELECT file.mime_type_id AS file_mime_type_id, file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE file.mime_type_id IN ($1::INTEGER)
+2026-08-07 15:23:57,424 - INFO - [generated in 0.00040s] (3,)
+2026-08-07 15:23:57,427 - INFO - MimeType repository: found 1 mime_types matching filters.
+2026-08-07 15:23:57,427 - INFO - 127.0.0.1:37316 - "GET /api/mime_types/ HTTP/1.1" 200
+2026-08-07 15:23:57,428 - INFO - ROLLBACK
+2026-08-07 15:24:02,814 - INFO - Shutting down
+2026-08-07 15:24:02,915 - INFO - Waiting for application shutdown.
+2026-08-07 15:24:02,916 - INFO - Application shutdown complete.
+2026-08-07 15:24:02,916 - INFO - Finished server process [139594]
+2026-08-07 15:24:03,670 - INFO - logger started
+2026-08-07 15:24:03,725 - INFO - Started server process [139820]
+2026-08-07 15:24:03,725 - INFO - Waiting for application startup.
+2026-08-07 15:24:03,725 - INFO - Application startup complete.
+2026-08-07 15:24:17,689 - INFO - Shutting down
+2026-08-07 15:24:17,790 - INFO - Waiting for application shutdown.
+2026-08-07 15:24:17,792 - INFO - Application shutdown complete.
+2026-08-07 15:24:17,792 - INFO - Finished server process [139820]
+2026-08-07 15:24:22,330 - INFO - logger started
+2026-08-07 15:24:22,385 - INFO - Started server process [140059]
+2026-08-07 15:24:22,385 - INFO - Waiting for application startup.
+2026-08-07 15:24:22,385 - INFO - Application startup complete.
+2026-08-07 15:24:40,222 - DEBUG - MimeType repository: get mime type by id. Params: id=3.
+2026-08-07 15:24:40,252 - INFO - select pg_catalog.version()
+2026-08-07 15:24:40,252 - INFO - [raw sql] ()
+2026-08-07 15:24:40,258 - INFO - select current_schema()
+2026-08-07 15:24:40,259 - INFO - [raw sql] ()
+2026-08-07 15:24:40,264 - INFO - show standard_conforming_strings
+2026-08-07 15:24:40,264 - INFO - [raw sql] ()
+2026-08-07 15:24:40,267 - INFO - BEGIN (implicit)
+2026-08-07 15:24:40,299 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:24:40,300 - INFO - [generated in 0.00066s] (3,)
+2026-08-07 15:24:40,306 - INFO - MimeType repository: found id=3.
+2026-08-07 15:24:40,313 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id = $1::INTEGER
+2026-08-07 15:24:40,313 - INFO - [generated in 0.00064s] (1,)
+2026-08-07 15:24:40,314 - INFO - ROLLBACK
+2026-08-07 15:24:40,316 - INFO - 127.0.0.1:52422 - "GET /api/mime_types/3 HTTP/1.1" 500
+2026-08-07 15:24:40,317 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 352, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 30, in get_by_id
+    return MimeTypeResponse.model_validate(response, from_attributes=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/pydantic/main.py", line 732, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for MimeTypeResponse
+category
+  Error extracting attribute: MissingGreenlet: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s) [type=get_attribute_error, input_value=<infrastructure.db_models...bject at 0x7f7f35f09310>, input_type=MimeType]
+    For further information visit https://errors.pydantic.dev/2.13/v/get_attribute_error
+2026-08-07 15:25:52,822 - INFO - Shutting down
+2026-08-07 15:25:52,922 - INFO - Waiting for application shutdown.
+2026-08-07 15:25:52,923 - INFO - Application shutdown complete.
+2026-08-07 15:25:52,923 - INFO - Finished server process [140059]
+2026-08-07 15:25:53,731 - INFO - logger started
+2026-08-07 15:25:53,790 - INFO - Started server process [141265]
+2026-08-07 15:25:53,790 - INFO - Waiting for application startup.
+2026-08-07 15:25:53,790 - INFO - Application startup complete.
+2026-08-07 15:26:14,164 - INFO - Shutting down
+2026-08-07 15:26:14,265 - INFO - Waiting for application shutdown.
+2026-08-07 15:26:14,266 - INFO - Application shutdown complete.
+2026-08-07 15:26:14,266 - INFO - Finished server process [141265]
+2026-08-07 15:26:15,095 - INFO - logger started
+2026-08-07 15:26:15,162 - INFO - Started server process [141516]
+2026-08-07 15:26:15,162 - INFO - Waiting for application startup.
+2026-08-07 15:26:15,163 - INFO - Application startup complete.
+2026-08-07 15:26:59,668 - INFO - Shutting down
+2026-08-07 15:26:59,769 - INFO - Waiting for application shutdown.
+2026-08-07 15:26:59,770 - INFO - Application shutdown complete.
+2026-08-07 15:26:59,770 - INFO - Finished server process [141516]
+2026-08-07 15:27:00,543 - INFO - logger started
+2026-08-07 15:27:00,600 - INFO - Started server process [142108]
+2026-08-07 15:27:00,600 - INFO - Waiting for application startup.
+2026-08-07 15:27:00,601 - INFO - Application startup complete.
+2026-08-07 15:27:06,851 - DEBUG - MimeType repository: get mime type by id. Params: id=3.
+2026-08-07 15:27:06,903 - INFO - select pg_catalog.version()
+2026-08-07 15:27:06,904 - INFO - [raw sql] ()
+2026-08-07 15:27:06,910 - INFO - select current_schema()
+2026-08-07 15:27:06,911 - INFO - [raw sql] ()
+2026-08-07 15:27:06,917 - INFO - show standard_conforming_strings
+2026-08-07 15:27:06,917 - INFO - [raw sql] ()
+2026-08-07 15:27:06,920 - INFO - BEGIN (implicit)
+2026-08-07 15:27:06,927 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:27:06,927 - INFO - [generated in 0.00070s] (3,)
+2026-08-07 15:27:06,941 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-07 15:27:06,942 - INFO - [generated in 0.00088s] (1,)
+2026-08-07 15:27:06,952 - INFO - SELECT file.mime_type_id AS file_mime_type_id, file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE file.mime_type_id IN ($1::INTEGER)
+2026-08-07 15:27:06,953 - INFO - [generated in 0.00111s] (3,)
+2026-08-07 15:27:06,959 - INFO - MimeType repository: found id=3.
+2026-08-07 15:27:06,969 - INFO - ROLLBACK
+2026-08-07 15:27:06,971 - INFO - 127.0.0.1:44040 - "GET /api/mime_types/3 HTTP/1.1" 500
+2026-08-07 15:27:06,973 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 727, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 324, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response', 0), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('id', 3)}
+  {'type': 'model_attributes_type', 'loc': ('response', 1), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('name', 'image/jpeg')}
+  {'type': 'model_attributes_type', 'loc': ('response', 2), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('category', CategoryResponse(id=1, name='other'))}
+
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 24, in get_by_id
+    GET /api/mime_types/{id}
+2026-08-07 15:27:13,820 - INFO - Shutting down
+2026-08-07 15:27:13,921 - INFO - Waiting for application shutdown.
+2026-08-07 15:27:13,922 - INFO - Application shutdown complete.
+2026-08-07 15:27:13,922 - INFO - Finished server process [142108]
+2026-08-07 15:27:15,596 - INFO - logger started
+2026-08-07 15:27:15,654 - INFO - Started server process [142345]
+2026-08-07 15:27:15,654 - INFO - Waiting for application startup.
+2026-08-07 15:27:15,654 - INFO - Application startup complete.
+2026-08-07 15:27:18,321 - DEBUG - MimeType repository: get mime type by id. Params: id=3.
+2026-08-07 15:27:18,356 - INFO - select pg_catalog.version()
+2026-08-07 15:27:18,356 - INFO - [raw sql] ()
+2026-08-07 15:27:18,362 - INFO - select current_schema()
+2026-08-07 15:27:18,362 - INFO - [raw sql] ()
+2026-08-07 15:27:18,366 - INFO - show standard_conforming_strings
+2026-08-07 15:27:18,367 - INFO - [raw sql] ()
+2026-08-07 15:27:18,369 - INFO - BEGIN (implicit)
+2026-08-07 15:27:18,379 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:27:18,380 - INFO - [generated in 0.00059s] (3,)
+2026-08-07 15:27:18,390 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-07 15:27:18,390 - INFO - [generated in 0.00060s] (1,)
+2026-08-07 15:27:18,398 - INFO - SELECT file.mime_type_id AS file_mime_type_id, file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE file.mime_type_id IN ($1::INTEGER)
+2026-08-07 15:27:18,398 - INFO - [generated in 0.00083s] (3,)
+2026-08-07 15:27:18,403 - INFO - MimeType repository: found id=3.
+2026-08-07 15:27:18,404 - INFO - ROLLBACK
+2026-08-07 15:27:18,406 - INFO - 127.0.0.1:55324 - "GET /api/mime_types/3 HTTP/1.1" 500
+2026-08-07 15:27:18,406 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 727, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 324, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response', 0), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('id', 3)}
+  {'type': 'model_attributes_type', 'loc': ('response', 1), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('name', 'image/jpeg')}
+  {'type': 'model_attributes_type', 'loc': ('response', 2), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('category', CategoryResponse(id=1, name='other'))}
+
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 24, in get_by_id
+    GET /api/mime_types/{id}
+2026-08-07 15:27:49,910 - INFO - Shutting down
+2026-08-07 15:27:50,011 - INFO - Waiting for application shutdown.
+2026-08-07 15:27:50,011 - INFO - Application shutdown complete.
+2026-08-07 15:27:50,011 - INFO - Finished server process [142345]
+2026-08-07 15:27:50,785 - INFO - logger started
+2026-08-07 15:27:50,846 - INFO - Started server process [142832]
+2026-08-07 15:27:50,846 - INFO - Waiting for application startup.
+2026-08-07 15:27:50,846 - INFO - Application startup complete.
+2026-08-07 15:28:00,509 - DEBUG - MimeType repository: get mime type by id. Params: id=3.
+2026-08-07 15:28:00,547 - INFO - select pg_catalog.version()
+2026-08-07 15:28:00,548 - INFO - [raw sql] ()
+2026-08-07 15:28:00,551 - INFO - select current_schema()
+2026-08-07 15:28:00,551 - INFO - [raw sql] ()
+2026-08-07 15:28:00,553 - INFO - show standard_conforming_strings
+2026-08-07 15:28:00,554 - INFO - [raw sql] ()
+2026-08-07 15:28:00,555 - INFO - BEGIN (implicit)
+2026-08-07 15:28:00,564 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:28:00,564 - INFO - [generated in 0.00047s] (3,)
+2026-08-07 15:28:00,574 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-07 15:28:00,574 - INFO - [generated in 0.00077s] (1,)
+2026-08-07 15:28:00,580 - INFO - SELECT file.mime_type_id AS file_mime_type_id, file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE file.mime_type_id IN ($1::INTEGER)
+2026-08-07 15:28:00,581 - INFO - [generated in 0.00050s] (3,)
+2026-08-07 15:28:00,583 - INFO - MimeType repository: found id=3.
+2026-08-07 15:28:00,584 - INFO - ROLLBACK
+2026-08-07 15:28:00,585 - INFO - 127.0.0.1:52498 - "GET /api/mime_types/3 HTTP/1.1" 500
+2026-08-07 15:28:00,586 - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1791, in _handle_selected
+    await route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1780, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2789, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1800, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1279, in handle
+    await app(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 727, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 324, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 3 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response', 0), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('id', 3)}
+  {'type': 'model_attributes_type', 'loc': ('response', 1), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('name', 'image/jpeg')}
+  {'type': 'model_attributes_type', 'loc': ('response', 2), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': ('category', CategoryResponse(id=1, name='other'))}
+
+  File "/home/zhvi/programming/MyGitHub/HomeFileSharing/app/features/mime_types/routes.py", line 24, in get_by_id
+    GET /api/mime_types/{id}
+2026-08-07 15:29:25,313 - INFO - Shutting down
+2026-08-07 15:29:25,414 - INFO - Waiting for application shutdown.
+2026-08-07 15:29:25,415 - INFO - Application shutdown complete.
+2026-08-07 15:29:25,415 - INFO - Finished server process [142832]
+2026-08-07 15:29:26,253 - INFO - logger started
+2026-08-07 15:29:26,310 - INFO - Started server process [143973]
+2026-08-07 15:29:26,310 - INFO - Waiting for application startup.
+2026-08-07 15:29:26,310 - INFO - Application startup complete.
+2026-08-07 15:29:29,855 - DEBUG - MimeType repository: get mime type by id. Params: id=3.
+2026-08-07 15:29:29,884 - INFO - select pg_catalog.version()
+2026-08-07 15:29:29,884 - INFO - [raw sql] ()
+2026-08-07 15:29:29,888 - INFO - select current_schema()
+2026-08-07 15:29:29,888 - INFO - [raw sql] ()
+2026-08-07 15:29:29,891 - INFO - show standard_conforming_strings
+2026-08-07 15:29:29,891 - INFO - [raw sql] ()
+2026-08-07 15:29:29,893 - INFO - BEGIN (implicit)
+2026-08-07 15:29:29,901 - INFO - SELECT mime_type.id, mime_type.name, mime_type.category_id, mime_type.created_at, mime_type.updated_at 
+FROM mime_type 
+WHERE mime_type.id = $1::INTEGER
+2026-08-07 15:29:29,902 - INFO - [generated in 0.00060s] (3,)
+2026-08-07 15:29:29,915 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-07 15:29:29,916 - INFO - [generated in 0.00101s] (1,)
+2026-08-07 15:29:29,925 - INFO - SELECT file.mime_type_id AS file_mime_type_id, file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE file.mime_type_id IN ($1::INTEGER)
+2026-08-07 15:29:29,926 - INFO - [generated in 0.00101s] (3,)
+2026-08-07 15:29:29,931 - INFO - MimeType repository: found id=3.
+2026-08-07 15:29:29,932 - INFO - 127.0.0.1:48220 - "GET /api/mime_types/3 HTTP/1.1" 200
+2026-08-07 15:29:29,934 - INFO - ROLLBACK
+2026-08-07 15:29:33,647 - INFO - Shutting down
+2026-08-07 15:29:33,749 - INFO - Waiting for application shutdown.
+2026-08-07 15:29:33,750 - INFO - Application shutdown complete.
+2026-08-07 15:29:33,750 - INFO - Finished server process [143973]
+2026-08-07 15:29:34,537 - INFO - logger started
+2026-08-07 15:29:34,595 - INFO - Started server process [144097]
+2026-08-07 15:29:34,595 - INFO - Waiting for application startup.
+2026-08-07 15:29:34,595 - INFO - Application startup complete.
+2026-08-07 15:29:49,256 - INFO - Shutting down
+2026-08-07 15:29:49,356 - INFO - Waiting for application shutdown.
+2026-08-07 15:29:49,357 - INFO - Application shutdown complete.
+2026-08-07 15:29:49,357 - INFO - Finished server process [144097]

@@ -18,7 +18,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             f"id={id}."
         )
         try:
-            response = await self.session.execute(select(MimeType).where(MimeType.id == id))
+            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).where(MimeType.id == id))
             result = response.scalar_one_or_none()
 
             if result:
@@ -83,7 +83,7 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             f"mime_type_id={mime_type_id}, name={name}, category_id={category_id}."
         )
         try:
-            response = await self.session.execute(select(MimeType).where(MimeType.id == mime_type_id))
+            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.files), selectinload(MimeType.category)).where(MimeType.id == mime_type_id))
 
             mime_type = response.scalar_one_or_none()
             if not mime_type:
