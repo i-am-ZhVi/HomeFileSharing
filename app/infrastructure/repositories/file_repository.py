@@ -6,6 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from infrastructure.db_models.mime_type_table import MimeType
 from core.logger import logger
 from features.files.repositories.interface import FileRepository
 from infrastructure.db_models.file_table import File
@@ -25,7 +26,7 @@ class SQLAlchemyFileRepository(FileRepository):
             response = await self.session.execute(select(File)
                 .where(File.id == id)
                 .options(
-                    selectinload(File.mime_type),
+                    selectinload(File.mime_type).selectinload(MimeType.category),
                     selectinload(File.extension),
                     selectinload(File.versions),))
 
@@ -48,7 +49,7 @@ class SQLAlchemyFileRepository(FileRepository):
         )
         try:
             query = select(File).options(
-                selectinload(File.mime_type),
+                selectinload(File.mime_type).selectinload(MimeType.category),
                 selectinload(File.extension),
                 selectinload(File.versions),
             ).order_by(desc(File.created_at), desc(File.id))
@@ -92,9 +93,15 @@ class SQLAlchemyFileRepository(FileRepository):
             await self.session.commit()
             await self.session.refresh(file)
 
+            new_file = await self.session.execute(select(File).where(File.id == file.id).options(
+                selectinload(File.mime_type).selectinload(MimeType.category),
+                selectinload(File.extension),
+                selectinload(File.versions),
+            ))
+
             logger.info(f"File repository: created file by id={file.id}")
 
-            return file
+            return new_file.scalar_one_or_none()
         except SQLAlchemyError:
             logger.exception("File repository: database error occurred during create operational workflow")
             raise
@@ -107,7 +114,11 @@ class SQLAlchemyFileRepository(FileRepository):
         )
 
         try:
-            response = await self.session.execute(select(File).where(File.id == file_id))
+            response = await self.session.execute(select(File).options(
+                selectinload(File.mime_type).selectinload(MimeType.category),
+                selectinload(File.extension),
+                selectinload(File.versions),
+            ).where(File.id == file_id))
             file = response.scalar_one_or_none()
 
             if not file:
