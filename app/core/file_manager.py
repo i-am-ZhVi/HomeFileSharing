@@ -13,6 +13,9 @@ class FileManager:
             file_name += name + str(version_uuid) + extension
         else: file_name = str(version_uuid)
 
+        path = Path(upload_dir)
+        path.mkdir(parents=True, exist_ok=True)
+
         file_path = upload_dir + "/" + file_name
 
         async with aiofiles.open(file_path, "wb") as buffer:
