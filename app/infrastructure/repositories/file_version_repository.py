@@ -8,7 +8,7 @@ from infrastructure.db_models.file_version_table import FileVersion
 
 
 class SQLAlchemyFileVersionRepository(FileVersionRepository):
-    async def __init__(self, session: AsyncSession):
+    def __init__(self, session: AsyncSession):
         self.session = session
 
 
