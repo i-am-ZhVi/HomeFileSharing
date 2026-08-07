@@ -16,7 +16,7 @@ class CreateFileVersionUseCase:
     async def execute(self, file_id: int, version: str | None, file: UploadFile, category_name: str) -> FileVersion | None:
         version_uuid = uuid4()
 
-        if not await file_manager.save_file_to_directory(file=file, file_name=str(version_uuid) if settings.FILE_CRYPT or not file.filename else file.filename, upload_dir=settings.UPLOAD_DIRECTORY + "/" + category_name):
+        if not await file_manager.save_file_to_directory(file=file, version_uuid=version_uuid, upload_dir=settings.UPLOAD_DIRECTORY + "/" + category_name):
             raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="file not saved")
 
         bytes = file.size
