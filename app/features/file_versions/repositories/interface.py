@@ -5,7 +5,11 @@ from app.infrastructure.db_models.file_version_table import FileVersion
 
 class FileVersionRepository(ABC):
     @abstractmethod
-    async def get(self, version_id: str | None, file_id: int | None) -> FileVersion | list[FileVersion] | None:
+    async def get_by_id(self, id: str) -> FileVersion | None:
+        pass
+
+    @abstractmethod
+    async def get_list(self, file_id: int | None) -> list[FileVersion]:
         pass
 
     @abstractmethod
