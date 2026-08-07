@@ -5,7 +5,11 @@ from app.infrastructure.db_models.extension_table import Extension
 
 class ExtensionRepository(ABC):
     @abstractmethod
-    async def get(self, extension_id: int | None, sub_name: str | None) -> Extension | list[Extension] | None:
+    async def get_by_id(self, id: int) -> Extension | None:
+        pass
+
+    @abstractmethod
+    async def get_list(self, sub_name: str | None) -> list[Extension]:
         pass
 
     @abstractmethod
