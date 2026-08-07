@@ -4,8 +4,13 @@ from app.infrastructure.db_models.category_table import Category
 
 
 class CategoryRepository(ABC):
+
     @abstractmethod
-    async def get(self, category_id: int | None, sub_name: str | None, mime_type_id: int | None) -> Category | list[Category] | None:
+    async def get_by_id(self, id: int) -> Category | None:
+        pass
+
+    @abstractmethod
+    async def get_list(self, sub_name: str | None, mime_type_id: int | None) -> list[Category]:
         pass
 
     @abstractmethod
