@@ -4177,3 +4177,167 @@ FROM category
 WHERE category.id IN ($1::INTEGER)
 2026-08-08 14:13:11,983 - INFO - [generated in 0.00034s] (3,)
 2026-08-08 14:13:12,009 - INFO - ROLLBACK
+2026-08-08 14:23:35,666 - INFO - select pg_catalog.version()
+2026-08-08 14:23:35,666 - INFO - [raw sql] ()
+2026-08-08 14:23:35,671 - INFO - select current_schema()
+2026-08-08 14:23:35,671 - INFO - [raw sql] ()
+2026-08-08 14:23:35,675 - INFO - show standard_conforming_strings
+2026-08-08 14:23:35,676 - INFO - [raw sql] ()
+2026-08-08 14:23:35,678 - INFO - BEGIN (implicit)
+2026-08-08 14:23:35,688 - INFO - SELECT file.id, file.name, file.extension_id, file.password_hash, file.created_at, file.updated_at 
+FROM file ORDER BY file.created_at DESC, file.id DESC
+2026-08-08 14:23:35,689 - INFO - [generated in 0.00102s] ()
+2026-08-08 14:23:35,704 - INFO - SELECT anon_1.file_id AS anon_1_file_id, anon_1.id AS anon_1_id, anon_1.version AS anon_1_version, anon_1.bytes AS anon_1_bytes, anon_1.checksum AS anon_1_checksum, anon_1.created_at AS anon_1_created_at, anon_1.updated_at AS anon_1_updated_at 
+FROM (SELECT file_version.id AS id, file_version.file_id AS file_id, file_version.version AS version, file_version.bytes AS bytes, file_version.checksum AS checksum, file_version.created_at AS created_at, file_version.updated_at AS updated_at 
+FROM file_version ORDER BY file_version.created_at DESC) AS anon_1 
+WHERE anon_1.file_id IN ($1::INTEGER, $2::INTEGER, $3::INTEGER, $4::INTEGER, $5::INTEGER)
+2026-08-08 14:23:35,704 - INFO - [generated in 0.00078s] (19, 18, 17, 16, 15)
+2026-08-08 14:23:35,710 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE extension.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:23:35,711 - INFO - [generated in 0.00033s] (7, 8)
+2026-08-08 14:23:35,715 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE mime_type.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:23:35,715 - INFO - [generated in 0.00029s] (7, 8)
+2026-08-08 14:23:35,723 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-08 14:23:35,723 - INFO - [generated in 0.00097s] (3,)
+2026-08-08 14:23:35,729 - INFO - ROLLBACK
+2026-08-08 14:31:09,073 - INFO - select pg_catalog.version()
+2026-08-08 14:31:09,074 - INFO - [raw sql] ()
+2026-08-08 14:31:09,079 - INFO - select current_schema()
+2026-08-08 14:31:09,079 - INFO - [raw sql] ()
+2026-08-08 14:31:09,082 - INFO - show standard_conforming_strings
+2026-08-08 14:31:09,082 - INFO - [raw sql] ()
+2026-08-08 14:31:09,085 - INFO - BEGIN (implicit)
+2026-08-08 14:31:09,093 - INFO - SELECT file.id, file.name, file.extension_id, file.password_hash, file.created_at, file.updated_at 
+FROM file ORDER BY file.created_at DESC, file.id DESC
+2026-08-08 14:31:09,093 - INFO - [generated in 0.00048s] ()
+2026-08-08 14:31:09,111 - INFO - SELECT anon_1.file_id AS anon_1_file_id, anon_1.id AS anon_1_id, anon_1.version AS anon_1_version, anon_1.bytes AS anon_1_bytes, anon_1.checksum AS anon_1_checksum, anon_1.created_at AS anon_1_created_at, anon_1.updated_at AS anon_1_updated_at 
+FROM (SELECT file_version.id AS id, file_version.file_id AS file_id, file_version.version AS version, file_version.bytes AS bytes, file_version.checksum AS checksum, file_version.created_at AS created_at, file_version.updated_at AS updated_at 
+FROM file_version ORDER BY file_version.created_at DESC) AS anon_1 
+WHERE anon_1.file_id IN ($1::INTEGER, $2::INTEGER, $3::INTEGER, $4::INTEGER, $5::INTEGER)
+2026-08-08 14:31:09,111 - INFO - [generated in 0.00086s] (19, 18, 17, 16, 15)
+2026-08-08 14:31:09,122 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE extension.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:31:09,122 - INFO - [generated in 0.00114s] (7, 8)
+2026-08-08 14:31:09,133 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE mime_type.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:31:09,133 - INFO - [generated in 0.00076s] (7, 8)
+2026-08-08 14:31:09,143 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-08 14:31:09,143 - INFO - [generated in 0.00088s] (3,)
+2026-08-08 14:31:09,149 - INFO - ROLLBACK
+2026-08-08 14:34:52,402 - INFO - select pg_catalog.version()
+2026-08-08 14:34:52,402 - INFO - [raw sql] ()
+2026-08-08 14:34:52,406 - INFO - select current_schema()
+2026-08-08 14:34:52,406 - INFO - [raw sql] ()
+2026-08-08 14:34:52,409 - INFO - show standard_conforming_strings
+2026-08-08 14:34:52,409 - INFO - [raw sql] ()
+2026-08-08 14:34:52,412 - INFO - BEGIN (implicit)
+2026-08-08 14:34:52,420 - INFO - SELECT file.id, file.name, file.extension_id, file.password_hash, file.created_at, file.updated_at 
+FROM file ORDER BY file.created_at DESC, file.id DESC
+2026-08-08 14:34:52,421 - INFO - [generated in 0.00048s] ()
+2026-08-08 14:34:52,434 - INFO - SELECT anon_1.file_id AS anon_1_file_id, anon_1.id AS anon_1_id, anon_1.version AS anon_1_version, anon_1.bytes AS anon_1_bytes, anon_1.checksum AS anon_1_checksum, anon_1.created_at AS anon_1_created_at, anon_1.updated_at AS anon_1_updated_at 
+FROM (SELECT file_version.id AS id, file_version.file_id AS file_id, file_version.version AS version, file_version.bytes AS bytes, file_version.checksum AS checksum, file_version.created_at AS created_at, file_version.updated_at AS updated_at 
+FROM file_version ORDER BY file_version.created_at DESC) AS anon_1 
+WHERE anon_1.file_id IN ($1::INTEGER, $2::INTEGER, $3::INTEGER, $4::INTEGER, $5::INTEGER)
+2026-08-08 14:34:52,435 - INFO - [generated in 0.00061s] (19, 18, 17, 16, 15)
+2026-08-08 14:34:52,444 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE extension.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:34:52,445 - INFO - [generated in 0.00072s] (7, 8)
+2026-08-08 14:34:52,453 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE mime_type.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:34:52,453 - INFO - [generated in 0.00052s] (7, 8)
+2026-08-08 14:34:52,458 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-08 14:34:52,459 - INFO - [generated in 0.00066s] (3,)
+2026-08-08 14:34:52,516 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE $1::INTEGER = mime_type.category_id
+2026-08-08 14:34:52,517 - INFO - [generated in 0.00102s] (3,)
+2026-08-08 14:34:52,522 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE $1::INTEGER = extension.mime_type_id
+2026-08-08 14:34:52,522 - INFO - [generated in 0.00070s] (8,)
+2026-08-08 14:34:52,527 - INFO - SELECT file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE $1::INTEGER = file.extension_id
+2026-08-08 14:34:52,527 - INFO - [generated in 0.00086s] (8,)
+2026-08-08 14:34:52,529 - INFO - ROLLBACK
+2026-08-08 14:37:04,660 - INFO - select pg_catalog.version()
+2026-08-08 14:37:04,660 - INFO - [raw sql] ()
+2026-08-08 14:37:04,665 - INFO - select current_schema()
+2026-08-08 14:37:04,666 - INFO - [raw sql] ()
+2026-08-08 14:37:04,668 - INFO - show standard_conforming_strings
+2026-08-08 14:37:04,668 - INFO - [raw sql] ()
+2026-08-08 14:37:04,671 - INFO - BEGIN (implicit)
+2026-08-08 14:37:04,679 - INFO - SELECT file.id, file.name, file.extension_id, file.password_hash, file.created_at, file.updated_at 
+FROM file ORDER BY file.created_at DESC, file.id DESC
+2026-08-08 14:37:04,680 - INFO - [generated in 0.00044s] ()
+2026-08-08 14:37:04,695 - INFO - SELECT anon_1.file_id AS anon_1_file_id, anon_1.id AS anon_1_id, anon_1.version AS anon_1_version, anon_1.bytes AS anon_1_bytes, anon_1.checksum AS anon_1_checksum, anon_1.created_at AS anon_1_created_at, anon_1.updated_at AS anon_1_updated_at 
+FROM (SELECT file_version.id AS id, file_version.file_id AS file_id, file_version.version AS version, file_version.bytes AS bytes, file_version.checksum AS checksum, file_version.created_at AS created_at, file_version.updated_at AS updated_at 
+FROM file_version ORDER BY file_version.created_at DESC) AS anon_1 
+WHERE anon_1.file_id IN ($1::INTEGER, $2::INTEGER, $3::INTEGER, $4::INTEGER, $5::INTEGER)
+2026-08-08 14:37:04,696 - INFO - [generated in 0.00111s] (19, 18, 17, 16, 15)
+2026-08-08 14:37:04,709 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE extension.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:37:04,709 - INFO - [generated in 0.00078s] (7, 8)
+2026-08-08 14:37:04,717 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE mime_type.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:37:04,717 - INFO - [generated in 0.00056s] (7, 8)
+2026-08-08 14:37:04,724 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-08 14:37:04,725 - INFO - [generated in 0.00084s] (3,)
+2026-08-08 14:37:04,734 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE $1::INTEGER = mime_type.category_id
+2026-08-08 14:37:04,735 - INFO - [generated in 0.00060s] (3,)
+2026-08-08 14:37:04,738 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE $1::INTEGER = extension.mime_type_id
+2026-08-08 14:37:04,739 - INFO - [generated in 0.00054s] (8,)
+2026-08-08 14:37:04,742 - INFO - SELECT file.id AS file_id, file.name AS file_name, file.extension_id AS file_extension_id, file.password_hash AS file_password_hash, file.created_at AS file_created_at, file.updated_at AS file_updated_at 
+FROM file 
+WHERE $1::INTEGER = file.extension_id
+2026-08-08 14:37:04,742 - INFO - [generated in 0.00058s] (8,)
+2026-08-08 14:37:04,744 - INFO - ROLLBACK
+2026-08-08 14:45:37,149 - INFO - select pg_catalog.version()
+2026-08-08 14:45:37,149 - INFO - [raw sql] ()
+2026-08-08 14:45:37,153 - INFO - select current_schema()
+2026-08-08 14:45:37,153 - INFO - [raw sql] ()
+2026-08-08 14:45:37,156 - INFO - show standard_conforming_strings
+2026-08-08 14:45:37,156 - INFO - [raw sql] ()
+2026-08-08 14:45:37,158 - INFO - BEGIN (implicit)
+2026-08-08 14:45:37,166 - INFO - SELECT file.id, file.name, file.extension_id, file.password_hash, file.created_at, file.updated_at 
+FROM file ORDER BY file.created_at DESC, file.id DESC
+2026-08-08 14:45:37,166 - INFO - [generated in 0.00048s] ()
+2026-08-08 14:45:37,177 - INFO - SELECT anon_1.file_id AS anon_1_file_id, anon_1.id AS anon_1_id, anon_1.version AS anon_1_version, anon_1.bytes AS anon_1_bytes, anon_1.checksum AS anon_1_checksum, anon_1.created_at AS anon_1_created_at, anon_1.updated_at AS anon_1_updated_at 
+FROM (SELECT file_version.id AS id, file_version.file_id AS file_id, file_version.version AS version, file_version.bytes AS bytes, file_version.checksum AS checksum, file_version.created_at AS created_at, file_version.updated_at AS updated_at 
+FROM file_version ORDER BY file_version.created_at DESC) AS anon_1 
+WHERE anon_1.file_id IN ($1::INTEGER, $2::INTEGER, $3::INTEGER, $4::INTEGER, $5::INTEGER)
+2026-08-08 14:45:37,177 - INFO - [generated in 0.00059s] (19, 18, 17, 16, 15)
+2026-08-08 14:45:37,189 - INFO - SELECT extension.id AS extension_id, extension.name AS extension_name, extension.mime_type_id AS extension_mime_type_id, extension.created_at AS extension_created_at, extension.updated_at AS extension_updated_at 
+FROM extension 
+WHERE extension.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:45:37,189 - INFO - [generated in 0.00099s] (7, 8)
+2026-08-08 14:45:37,198 - INFO - SELECT mime_type.id AS mime_type_id, mime_type.name AS mime_type_name, mime_type.category_id AS mime_type_category_id, mime_type.created_at AS mime_type_created_at, mime_type.updated_at AS mime_type_updated_at 
+FROM mime_type 
+WHERE mime_type.id IN ($1::INTEGER, $2::INTEGER)
+2026-08-08 14:45:37,198 - INFO - [generated in 0.00077s] (7, 8)
+2026-08-08 14:45:37,206 - INFO - SELECT category.id AS category_id, category.name AS category_name, category.created_at AS category_created_at, category.updated_at AS category_updated_at 
+FROM category 
+WHERE category.id IN ($1::INTEGER)
+2026-08-08 14:45:37,206 - INFO - [generated in 0.00076s] (3,)
+2026-08-08 14:45:37,259 - INFO - ROLLBACK

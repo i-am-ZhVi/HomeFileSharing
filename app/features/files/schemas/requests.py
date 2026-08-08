@@ -1,15 +1,32 @@
+from typing import TYPE_CHECKING
 from fastapi import Form
 from pydantic import BaseModel
 
-from features.extension.schemas.requests import ExtensionResponse
-from features.mime_types.schemas.requests import MimeTypeResponse
+from features.base_schema import BaseResponse
+if TYPE_CHECKING:
+    from features.file_versions.schemas.requests import FileVersionFileResponse
+    from features.extension.schemas.requests import ExtensionFileResponse
 
 
-class FileResponse(BaseModel):
+class FileResponse(BaseResponse):
     id: int
     name: str
-    extension: ExtensionResponse
 
+    extension: "ExtensionFileResponse"
+    versions: list["FileVersionFileResponse"]
+
+
+class FileExtensionResponse(BaseResponse):
+    id: int
+    name: str
+
+    versions: list["FileVersionFileResponse"]
+
+class FileFileVersionResponse(BaseResponse):
+    id: int
+    name: str
+
+    extension: "ExtensionFileResponse"
 
 class FileUpload(BaseModel):
     password: str | None = None

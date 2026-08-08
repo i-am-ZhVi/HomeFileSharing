@@ -1,10 +1,19 @@
+from typing import TYPE_CHECKING
 import uuid
-from pydantic import BaseModel
+from features.base_schema import BaseResponse
+if TYPE_CHECKING:
+    from features.files.schemas.requests import FileFileVersionResponse
 
-from features.files.schemas.requests import FileResponse
 
+class FileVersionResponse(BaseResponse):
+    id: uuid.UUID
+    version: str
+    bytes: int
+    checksum: str
 
-class FileVersionResponse(BaseModel):
+    file: "FileFileVersionResponse"
+
+class FileVersionFileResponse(BaseResponse):
     id: uuid.UUID
     version: str
     bytes: int
