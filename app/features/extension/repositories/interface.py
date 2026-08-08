@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 from infrastructure.db_models.extension_table import Extension
 
 
@@ -22,4 +21,8 @@ class ExtensionRepository(ABC):
 
     @abstractmethod
     async def update(self, extension_id: int, extension_name: str | None, mime_type_id: int | None) -> Extension | None:
+        pass
+
+    @abstractmethod
+    async def delete(self, id: int) -> bool:
         pass

@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
+from features.extension.usecases.delete_extension import DeleteExtensionUseCase
 from core.database import get_db_session
 from features.extension.schemas.requests import ExtensionResponse
 from features.extension.usecases.create_extension import CreateExtensionUseCase
@@ -50,3 +52,22 @@ async def update(id: int, name: str | None = None, mime_type_id: int | None = No
     response = await usecase.execute(id, name, mime_type_id)
 
     return ExtensionResponse.model_validate(response, from_attributes=True)
+
+@router.delete("/{id}", response_model=list[ExtensionResponse])
+async def delete(id: int, session: AsyncSession = Depends(get_db_session)):
+    repo = SQLAlchemyExtensionRepository(session)
+    usecase = GetExtensionByIdUseCase(repo)
+
+    extension = await usecase.execute(id)
+
+    if not extension:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    delete_usecase = DeleteExtensionUseCase(repo)
+
+    if not await delete_usecase.execute(id=id, name=extension.name, dir_name=extension.mime_type.category.name):
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return {
+        "message": f"The {extension.name} extension was deleted."""
+    }

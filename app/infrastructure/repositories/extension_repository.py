@@ -1,4 +1,4 @@
-from sqlalchemy import desc, select, true
+from sqlalchemy import delete, desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -120,6 +120,24 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             logger.info(f"Extension repository: update extension by id={extension.id}")
 
             return extension
+
+        except SQLAlchemyError:
+            logger.exception("Extension repository: database error occurred during update operation workflow.")
+            raise
+
+
+    async def delete(self, id: int) -> bool:
+        logger.debug(
+            "Extension repository: delete extension. Params: "
+            f"id={id}."
+        )
+        try:
+            await self.session.execute(delete(Extension).where(Extension.id == id))
+            await self.session.commit()
+
+            logger.info(f"Extension repository: deleted extension by id={id}")
+
+            return True
 
         except SQLAlchemyError:
             logger.exception("Extension repository: database error occurred during update operation workflow.")
