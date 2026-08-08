@@ -65,7 +65,12 @@ async def delete(id: int, session: AsyncSession = Depends(get_db_session)):
 
     delete_usecase = DeleteExtensionUseCase(repo)
 
-    if not await delete_usecase.execute(id=id, name=extension.name, dir_name=extension.mime_type.category.name):
+    versions = []
+
+    for file in extension.files:
+        versions.append(*file.versions)
+
+    if not await delete_usecase.execute(id=id, versions=versions, dir_name=extension.mime_type.category.name):
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
 
     return {
