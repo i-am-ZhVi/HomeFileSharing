@@ -1,4 +1,4 @@
-from sqlalchemy import desc, select, true
+from sqlalchemy import delete, desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -124,6 +124,25 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             logger.info(f"MimeType repository: update mime type by id={mime_type.id}")
 
             return mime_type
+
+        except SQLAlchemyError:
+            logger.exception("MimeType repository: database error occurred during update operation workflow.")
+            raise
+
+
+    async def delete(self, id: int) -> bool:
+        logger.debug(
+            "MimeType repository: delete MimeType. Params: "
+            f"id={id}."
+        )
+        try:
+
+            await self.session.execute(delete(MimeType).where(MimeType.id == id))
+            await self.session.commit()
+
+            logger.info(f"MimeType repository: delete mime type by id={id}")
+
+            return True
 
         except SQLAlchemyError:
             logger.exception("MimeType repository: database error occurred during update operation workflow.")

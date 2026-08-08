@@ -23,3 +23,7 @@ class MimeTypeRepository(ABC):
     @abstractmethod
     async def update(self, mime_type_id: int, name: str | None, category_id: int | None) -> MimeType | None:
         pass
+
+    @abstractmethod
+    async def delete(self, id: int) -> bool:
+        pass
