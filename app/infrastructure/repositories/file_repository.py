@@ -4,8 +4,9 @@ from typing import Optional
 from sqlalchemy import and_, desc, insert, or_, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import aliased, selectinload
 
+from infrastructure.db_models.file_version_table import FileVersion
 from infrastructure.db_models.extension_table import Extension
 from infrastructure.db_models.mime_type_table import MimeType
 from core.logger import logger
@@ -24,11 +25,13 @@ class SQLAlchemyFileRepository(FileRepository):
             f"file_id={id}."
         )
         try:
+            ordered_versions = aliased(FileVersion, select(FileVersion).order_by(desc(FileVersion.created_at)).subquery())
+
             response = await self.session.execute(select(File)
                 .where(File.id == id)
                 .options(
                     selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
-                    selectinload(File.versions),))
+                    selectinload(File.versions.of_type(ordered_versions)),))
 
             result = response.scalar_one_or_none()
 
@@ -48,9 +51,11 @@ class SQLAlchemyFileRepository(FileRepository):
             f"sub_name={sub_name}, extension_id={extension_id}.",
         )
         try:
+            ordered_versions = aliased(FileVersion, select(FileVersion).order_by(desc(FileVersion.created_at)).subquery())
+
             query = select(File).options(
                 selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
-                selectinload(File.versions),
+                selectinload(File.versions.of_type(ordered_versions)),
             ).order_by(desc(File.created_at), desc(File.id))
 
             filters = []
@@ -88,9 +93,11 @@ class SQLAlchemyFileRepository(FileRepository):
             await self.session.commit()
             await self.session.refresh(file)
 
+            ordered_versions = aliased(FileVersion, select(FileVersion).order_by(desc(FileVersion.created_at)).subquery())
+
             new_file = await self.session.execute(select(File).where(File.id == file.id).options(
                 selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
-                selectinload(File.versions),
+                selectinload(File.versions.of_type(ordered_versions)),
             ))
 
             logger.info(f"File repository: created file by id={file.id}")
@@ -108,9 +115,12 @@ class SQLAlchemyFileRepository(FileRepository):
         )
 
         try:
+
+            ordered_versions = aliased(FileVersion, select(FileVersion).order_by(desc(FileVersion.created_at)).subquery())
+
             response = await self.session.execute(select(File).options(
                 selectinload(File.extension).selectinload(Extension.mime_type).selectinload(MimeType.category),
-                selectinload(File.versions),
+                selectinload(File.versions.of_type(ordered_versions)),
             ).where(File.id == file_id))
             file = response.scalar_one_or_none()
 

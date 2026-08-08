@@ -1,9 +1,11 @@
 import mimetypes
 from pathlib import Path
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse as FastApiFileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
+from core.file_manager import file_manager
 from features.category.usecases.get_category_by_name import GetCategoryByNameUseCase
 from features.extension.usecases.get_extension_by_name import GetExtensionByNameUseCase
 from features.mime_types.usecases.get_mime_type_by_name import GetMimeTypeByNameUseCase
@@ -27,7 +29,6 @@ from features.files.usecases.update_file import UpdateFileUseCase
 from infrastructure.repositories.file_repository import SQLAlchemyFileRepository
 from core.database import get_db_session
 from features.files.schemas.requests import FileResponse, FileUpload
-
 
 router = APIRouter(prefix="/files", tags=["Files"])
 
@@ -133,6 +134,34 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
     await file_version_create_usecase.execute(file_id=response.id, version="v1.0", file=file, category_name=response.extension.mime_type.category.name)
 
     return FileResponse.model_validate(response, from_attributes=True)
+
+
+@router.get("/download/{id}")
+async def download(id: int, session: AsyncSession = Depends(get_db_session)):
+    repo = SQLAlchemyFileRepository(session)
+    usecase = GetFileByIdUseCase(repo)
+    file = await usecase.execute(id)
+
+    if not file:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    file_version = file.versions[0]
+
+    if not file_version:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    file_path = await file_manager.find_file_path_from_directory(version_uuid=file_version.id, upload_dir=f"{settings.UPLOAD_DIRECTORY}/{file.extension.mime_type.category.name}")
+
+    file_name = file.name
+
+    if file.extension.name != "":
+        file_name += "." + file.extension.name
+
+    return FastApiFileResponse(
+        path=file_path,
+        filename=file_name
+    )
+
 
 
 @router.patch("/{id}", response_model=FileResponse | None)
