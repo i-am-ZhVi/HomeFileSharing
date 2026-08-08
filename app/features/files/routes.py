@@ -125,7 +125,7 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
         extension_id = extension.id
 
 
-    response = await usecase.execute(name=file.filename.replace(f".{file_extension}", ""), extension_id=extension_id, password_hash=info.password)
+    response = await usecase.execute(name=file.filename.replace(f".{extension.name}", ""), extension_id=extension_id, password_hash=info.password)
 
     if not response:
         return None
