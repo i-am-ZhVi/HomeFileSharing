@@ -1,4 +1,4 @@
-from sqlalchemy import desc, select, true
+from sqlalchemy import delete, desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -123,6 +123,24 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             logger.info(f"Category repository: update category by id={category.id}")
 
             return category
+
+        except SQLAlchemyError:
+            logger.exception("Category repository: database error occurred during update operation workflow.")
+            raise
+
+    async def delete(self, id: int) -> bool:
+        logger.debug(
+            "Category repository: delete category. Params: "
+            f"id={id}."
+        )
+        try:
+            await self.session.execute(delete(Category).where(Category.id == id))
+
+            await self.session.commit()
+
+            logger.info(f"Category repository: delete category by id={id}")
+
+            return True
 
         except SQLAlchemyError:
             logger.exception("Category repository: database error occurred during update operation workflow.")

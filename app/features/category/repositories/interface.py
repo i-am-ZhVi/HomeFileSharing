@@ -24,3 +24,7 @@ class CategoryRepository(ABC):
     @abstractmethod
     async def update(self, category_id: int, category_name: str) -> Category | None:
         pass
+
+    @abstractmethod
+    async def delete(self, id: int) -> bool:
+        pass
