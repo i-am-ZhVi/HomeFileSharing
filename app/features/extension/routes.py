@@ -53,7 +53,7 @@ async def update(id: int, name: str | None = None, mime_type_id: int | None = No
 
     return ExtensionResponse.model_validate(response, from_attributes=True)
 
-@router.delete("/{id}", response_model=list[ExtensionResponse])
+@router.delete("/{id}")
 async def delete(id: int, session: AsyncSession = Depends(get_db_session)):
     repo = SQLAlchemyExtensionRepository(session)
     usecase = GetExtensionByIdUseCase(repo)
@@ -69,5 +69,5 @@ async def delete(id: int, session: AsyncSession = Depends(get_db_session)):
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
 
     return {
-        "message": f"The {extension.name} extension was deleted."""
+        "message": f"The {extension.name} extension was deleted."
     }
