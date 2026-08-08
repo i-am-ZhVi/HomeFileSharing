@@ -20,3 +20,7 @@ class FileVersionRepository(ABC):
     @abstractmethod
     async def update(self, version_uuid: str, file_id: int | None, version: str | None, bytes: int | None, checksum: str | None) -> FileVersion | None:
         pass
+
+    @abstractmethod
+    async def delete(self, version_uuid: str) -> bool:
+        pass

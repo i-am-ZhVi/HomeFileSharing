@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.status import HTTP_404_NOT_FOUND
+from starlette.status import HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
+from features.file_versions.usecases.delete_file_version import DeleteFileVersionUseCase
 from core.config import settings
 from core.file_manager import file_manager
-from features.file_versions.usecases import get_file_version_by_id
 from features.files.usecases.get_file_by_id import GetFileByIdUseCase
 from infrastructure.repositories.file_repository import SQLAlchemyFileRepository
 from features.file_versions.usecases.create_file_version import CreateFileVersionUseCase
@@ -84,3 +84,23 @@ async def update(version_uuid: str, file_id: int | None, version: str | None,
     response = await usecase.execute(version_uuid=version_uuid, file_id=file_id, version=version, bytes=bytes, checksum=checksum)
 
     return FileVersionResponse.model_validate(response, from_attributes=True)
+
+
+@router.delete("/{version_uuid}")
+async def delete(version_uuid: str, session: AsyncSession = Depends(get_db_session)):
+    repo = SQLAlchemyFileVersionRepository(session)
+    usecase = GetFileVersionByIdUseCase(repo)
+
+    version = await usecase.execute(version_uuid)
+
+    if not version:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    delete_usecase = DeleteFileVersionUseCase(repo)
+
+    if not await delete_usecase.execute(version_uuid=version_uuid, dir_name=version.file.extension.mime_type.category.name):
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return {
+        "message": f"The {version_uuid} file version was deleted."
+    }

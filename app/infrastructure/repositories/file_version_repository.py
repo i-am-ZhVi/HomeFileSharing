@@ -1,5 +1,5 @@
 from uuid import UUID
-from sqlalchemy import desc, select, true
+from sqlalchemy import delete, desc, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -117,6 +117,25 @@ class SQLAlchemyFileVersionRepository(FileVersionRepository):
             logger.info(f"File version repository: update file version by uuid={file_version.id}")
 
             return file_version
+
+        except SQLAlchemyError:
+            logger.exception("File version repository: database error occurred during update operational workflow.")
+            raise
+
+
+    async def delete(self, version_uuid: str) -> bool:
+        logger.debug(
+            "File version repository: update file version. Params"
+            f"uuid={version_uuid}."
+        )
+        try:
+
+            await self.session.execute(delete(FileVersion).where(FileVersion.id == version_uuid))
+            await self.session.commit()
+
+            logger.info(f"File version repository: deleted file version by uuid={version_uuid}")
+
+            return True
 
         except SQLAlchemyError:
             logger.exception("File version repository: database error occurred during update operational workflow.")
