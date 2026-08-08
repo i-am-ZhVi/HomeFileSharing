@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
-
 from infrastructure.db_models.file_table import File
 
 
@@ -19,4 +17,8 @@ class FileRepository(ABC):
 
     @abstractmethod
     async def update(self, file_id: int, name: str | None, extension_id: int | None, password_hash: str | None) -> File | None:
+        pass
+
+    @abstractmethod
+    async def delete(self, id: int) -> bool:
         pass

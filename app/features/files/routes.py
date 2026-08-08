@@ -3,8 +3,9 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse as FastApiFileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 
+from features.files.usecases.delete_file import DeleteFileUseCase
 from core.file_manager import file_manager
 from features.category.usecases.get_category_by_name import GetCategoryByNameUseCase
 from features.extension.usecases.get_extension_by_name import GetExtensionByNameUseCase
@@ -172,3 +173,23 @@ async def update(id: int, name: str | None = None, extension_id: int | None = No
     response = await usecase.execute(file_id=id, name=name, extension_id=extension_id, password_hash=password_hash)
 
     return FileResponse.model_validate(response, from_attributes=True)
+
+
+
+@router.delete("/{id}")
+async def delete(id: int, session: AsyncSession = Depends(get_db_session)):
+    repo = SQLAlchemyFileRepository(session)
+    usecase = GetFileByIdUseCase(repo)
+    file = await usecase.execute(id)
+
+    if not file:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    delete_usecase = DeleteFileUseCase(repo)
+
+    if not await delete_usecase.execute(id=id, versions=file.versions, dir_name=file.extension.mime_type.category.name):
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return {
+        "message": f"The {file.name} file was deleted."
+    }

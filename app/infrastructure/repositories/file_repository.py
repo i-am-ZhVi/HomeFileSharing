@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from sqlalchemy import and_, desc, insert, or_, select, true
+from sqlalchemy import and_, delete, desc, insert, or_, select, true
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased, selectinload
@@ -138,6 +138,26 @@ class SQLAlchemyFileRepository(FileRepository):
             logger.info(f"File repository: update file by id={file.id}")
 
             return file
+
+        except SQLAlchemyError:
+            logger.exception("File repository: database error occurred during update ooperaional workflow")
+            raise
+
+
+    async def delete(self, id: int) -> bool:
+        logger.info(
+            "File repository: delete file. Params: "
+            f"id={id}."
+        )
+
+        try:
+
+            await self.session.execute(delete(File).where(File.id == id))
+            await self.session.commit()
+
+            logger.info(f"File repository: delete file by id={id}")
+
+            return True
 
         except SQLAlchemyError:
             logger.exception("File repository: database error occurred during update ooperaional workflow")
