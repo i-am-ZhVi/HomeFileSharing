@@ -6,5 +6,5 @@ class GetFileVersionByIdUseCase:
     def __init__(self, repo: FileVersionRepository):
         self.repo = repo
 
-    async def execute(self, id: str) -> FileVersion | list[FileVersion] | None:
+    async def execute(self, id: str) -> FileVersion | None:
         return await self.repo.get_by_id(id=id)

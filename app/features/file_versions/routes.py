@@ -1,7 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_404_NOT_FOUND
 
+from core.config import settings
+from core.file_manager import file_manager
+from features.file_versions.usecases import get_file_version_by_id
 from features.files.usecases.get_file_by_id import GetFileByIdUseCase
 from infrastructure.repositories.file_repository import SQLAlchemyFileRepository
 from features.file_versions.usecases.create_file_version import CreateFileVersionUseCase
@@ -34,6 +38,26 @@ async def get_by_id(version_uuid: str, session: AsyncSession = Depends(get_db_se
 
     return FileVersionResponse.model_validate(response, from_attributes=True)
 
+@router.get("/download/{version_uuid}")
+async def download(version_uuid: str, session: AsyncSession = Depends(get_db_session)):
+    repo = SQLAlchemyFileVersionRepository(session)
+    usecase = GetFileVersionByIdUseCase(repo)
+    file_version = await usecase.execute(version_uuid)
+
+    if not file_version:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND)
+
+    file_path = await file_manager.find_file_path_from_directory(version_uuid=file_version.id, upload_dir=f"{settings.UPLOAD_DIRECTORY}/{file_version.file.extension.mime_type.category.name}")
+
+    file_name = file_version.file.name
+
+    if file_version.file.extension.name != "":
+        file_name += "." + file_version.file.extension.name
+
+    return FileResponse(
+        path=file_path,
+        filename=file_name
+    )
 
 @router.post("/", response_model=FileVersionResponse | None)
 async def create(file_id: int, version: str | None, file: UploadFile, session: AsyncSession = Depends(get_db_session)):
