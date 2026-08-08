@@ -58,12 +58,13 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
     repo = SQLAlchemyFileRepository(session)
     usecase = CreateFileUseCase(repo)
 
-    extension = Path(file.filename).suffix[1:]
+    file_extension = Path(file.filename).suffix[1:]
+
 
     extension_repo = SQLAlchemyExtensionRepository(session)
     extension_get_by_name_usecase = GetExtensionByNameUseCase(extension_repo)
 
-    extension = await extension_get_by_name_usecase.execute(name=extension if extension else "")
+    extension = await extension_get_by_name_usecase.execute(name=file_extension if file_extension else "")
     extension_id = None
 
 
@@ -110,21 +111,21 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
             mime_type_id = mime_type.id
 
         extension_create_usecase = CreateExtensionUseCase(extension_repo)
-        extension = await extension_create_usecase.execute(extension if extension else "", mime_type_id)
+        extension = await extension_create_usecase.execute(file_extension if file_extension else "", mime_type_id)
 
         if not extension:
             retries = 1
             while not extension and retries < 5:
-                extension = await extension_create_usecase.execute(extension if extension else "", mime_type_id)
-                logger.exception(f"File routes: The extension {extension if extension else ""} is not being created | retries {retries}/5.")
+                extension = await extension_create_usecase.execute(file_extension if file_extension else "", mime_type_id)
+                logger.exception(f"File routes: The extension {file_extension if file_extension else ""} is not being created | retries {retries}/5.")
                 retries += 1
             if not extension:
-                raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"File routes: The extension {extension if extension else ""} is not being created.")
+                raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"File routes: The extension {file_extension if file_extension else ""} is not being created.")
 
         extension_id = extension.id
 
 
-    response = await usecase.execute(name=file.filename.replace(f".{extension}", ""), extension_id=extension_id, password_hash=info.password)
+    response = await usecase.execute(name=file.filename.replace(f".{file_extension}", ""), extension_id=extension_id, password_hash=info.password)
 
     if not response:
         return None
