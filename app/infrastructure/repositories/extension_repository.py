@@ -33,6 +33,26 @@ class SQLAlchemyExtensionRepository(ExtensionRepository):
             logger.exception("Extension repository: database error coccurred during get operation workflow.")
             raise
 
+    async def get_by_name(self, name: str) -> Extension | None:
+        logger.debug(
+            "Extension repository: get extension by name. Params: "
+            f"name={name}."
+        )
+        try:
+            response = await self.session.execute(select(Extension).where(Extension.name == name).options(
+                selectinload(Extension.files).selectinload(File.versions), selectinload(Extension.mime_type).selectinload(MimeType.category)))
+            result = response.scalar_one_or_none()
+
+            if result:
+                logger.info(f"Extension repository: found name={result.name}.")
+            else:
+                logger.warning(f"Extension repository: name={name} not found.")
+
+            return result
+        except SQLAlchemyError:
+            logger.exception("Extension repository: database error coccurred during get operation workflow.")
+            raise
+
     async def get_list(self, sub_name: str | None, mime_type_id: int | None) -> list[Extension]:
         logger.debug(
             "Extension repository: get list extensions. Params: "

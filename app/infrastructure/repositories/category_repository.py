@@ -34,6 +34,26 @@ class SQLAlchemyCategoryRepository(CategoryRepository):
             logger.exception("Category repository: database error coccurred during get operation workflow.")
             raise
 
+    async def get_by_name(self, name: str) -> Category | None:
+        logger.debug(
+            "Category repository: get category by name. Params: "
+            f"name={name}."
+        )
+        try:
+            response = await self.session.execute(select(Category).where(Category.name == name)
+                .options(selectinload(Category.mime_types).selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions)))
+            result = response.scalar_one_or_none()
+
+            if result:
+                logger.info(f"Category repository: found name={result.name}.")
+            else:
+                logger.warning(f"Category repository: name={name} not found.")
+
+            return result
+        except SQLAlchemyError:
+            logger.exception("Category repository: database error coccurred during get operation workflow.")
+            raise
+
     async def get_list(self, sub_name: str | None, mime_type_id: int | None) -> list[Category]:
         logger.debug(
             "Category repository: get list categories. Params: "

@@ -4,6 +4,9 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
+from features.category.usecases.get_category_by_name import GetCategoryByNameUseCase
+from features.extension.usecases.get_extension_by_name import GetExtensionByNameUseCase
+from features.mime_types.usecases.get_mime_type_by_name import GetMimeTypeByNameUseCase
 from features.file_versions.usecases.create_file_version import CreateFileVersionUseCase
 from infrastructure.repositories.file_version_repository import SQLAlchemyFileVersionRepository
 from core.config import settings
@@ -57,29 +60,29 @@ async def create(info: FileUpload = Depends(FileUpload.as_form), file: UploadFil
     extension = Path(file.filename).suffix[1:]
 
     extension_repo = SQLAlchemyExtensionRepository(session)
-    extension_get_list_usecase = GetExtensionListUseCase(extension_repo)
+    extension_get_by_name_usecase = GetExtensionByNameUseCase(extension_repo)
 
-    extensions = await extension_get_list_usecase.execute(sub_name=extension if extension else "", mime_type_id=None)
+    extension = await extension_get_by_name_usecase.execute(name=extension if extension else "")
     extension_id = None
 
 
-    if extensions:
-        extension_id = extensions[0].id
+    if extension:
+        extension_id = extension.id
     else:
         file_mime_type, encodings = mimetypes.guess_type(file.filename)
         mime_type_repo = SQLAlchemyMimeTypeRepository(session)
-        mime_type_get_list_usecase = GetMimeTypeListUseCase(mime_type_repo)
-        mime_types = await mime_type_get_list_usecase.execute(sub_name=file_mime_type if file_mime_type else "", extension_id=None, category_id=None)
+        mime_type_get_by_name_usecase = GetMimeTypeByNameUseCase(mime_type_repo)
+        mime_type = await mime_type_get_by_name_usecase.execute(name=file_mime_type if file_mime_type else "")
         mime_type_id = None
-        if mime_types:
-            mime_type_id = mime_types[0].id
+        if mime_type:
+            mime_type_id = mime_type.id
         else:
             category_repo = SQLAlchemyCategoryRepository(session)
-            category_get_list_usecase = GetCategoryListUseCase(category_repo)
+            category_get_by_name_usecase = GetCategoryByNameUseCase(category_repo)
             category_id = None
-            categories = await category_get_list_usecase.execute(sub_name=settings.OTHER_FILES_DIRECTORY_NAME, mime_type_id=None)
-            if categories:
-                category_id = categories[0].id
+            category = await category_get_by_name_usecase.execute(name=settings.OTHER_FILES_DIRECTORY_NAME)
+            if category:
+                category_id = category.id
             else:
                 category_create_usecase = CreateCategoryUseCase(category_repo)
                 retries = 1

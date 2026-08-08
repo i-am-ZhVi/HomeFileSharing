@@ -34,6 +34,26 @@ class SQLAlchemyMimeTypeRepository(MimeTypeRepository):
             logger.exception("MimeType repository: database error coccurred during get operation workflow.")
             raise
 
+    async def get_by_name(self, name: str) -> MimeType | None:
+        logger.debug(
+            "MimeType repository: get mime type by name. Params: "
+            f"name={name}."
+        )
+        try:
+            response = await self.session.execute(select(MimeType).options(selectinload(MimeType.extensions).selectinload(Extension.files).selectinload(File.versions), selectinload(MimeType.category)).where(MimeType.name == name))
+            result = response.scalar_one_or_none()
+
+            if result:
+                logger.info(f"MimeType repository: found id={result.name}.")
+            else:
+                logger.warning(f"MimeType repository: id={name} not found.")
+
+            return result
+
+        except SQLAlchemyError:
+            logger.exception("MimeType repository: database error coccurred during get operation workflow.")
+            raise
+
     async def get_list(self, sub_name: str | None, extension_id: int | None, category_id: int | None) -> list[MimeType]:
         logger.debug(
             "MimeType repository: get mime types. Params: "

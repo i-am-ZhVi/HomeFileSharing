@@ -9,6 +9,10 @@ class MimeTypeRepository(ABC):
         pass
 
     @abstractmethod
+    async def get_by_name(self, name: str) -> MimeType | None:
+        pass
+
+    @abstractmethod
     async def get_list(self, sub_name: str | None,  extension_id: int | None, category_id: int | None) -> list[MimeType]:
         pass
 

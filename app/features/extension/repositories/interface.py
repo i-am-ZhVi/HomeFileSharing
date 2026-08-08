@@ -9,6 +9,10 @@ class ExtensionRepository(ABC):
         pass
 
     @abstractmethod
+    async def get_by_name(self, name: str) -> Extension | None:
+        pass
+
+    @abstractmethod
     async def get_list(self, sub_name: str | None, mime_type_id: int | None) -> list[Extension]:
         pass
 
