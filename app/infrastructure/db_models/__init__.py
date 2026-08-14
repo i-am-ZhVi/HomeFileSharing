@@ -1,0 +1,6 @@
+from infrastructure.db_models.base_table import Base
+from infrastructure.db_models.file_table import File
+from infrastructure.db_models.file_version_table import FileVersion
+from infrastructure.db_models.category_table import Category
+from infrastructure.db_models.extension_table import Extension
+from infrastructure.db_models.mime_type_table import MimeType
