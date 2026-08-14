@@ -1,13 +1,14 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from core.config import settings
 from features.routes import router as api_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # ВАЖНО: Импортируем все схемы ПЕРЕД сборкой
     from features.category.schemas.requests import CategoryResponse, CategoryMimeTypeResponse
     from features.mime_types.schemas.requests import MimeTypeResponse, MimeTypeCategoryResponse, MimeTypeExtensionResponse
     from features.extension.schemas.requests import ExtensionResponse, ExtensionFileResponse, ExtensionMimeTypeResponse
@@ -48,3 +49,10 @@ app.add_middleware(
 @app.get("/api")
 def root():
     return "Hello, this is a home-based web service for file sharing."
+
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/api/web-app")
+def web_app():
+    return FileResponse("static/web_interface.html")

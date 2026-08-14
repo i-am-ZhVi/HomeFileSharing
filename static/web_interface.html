@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File hub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #1e293b;
+      padding: 20px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    header h1 {
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header h1 small {
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748b;
+    }
+    .tabs {
+      display: flex;
+      gap: 6px;
+      background: #e9edf2;
+      padding: 4px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      font-weight: 500;
+      font-size: 14px;
+      color: #475569;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn:hover { background: #d1d9e6; }
+    .tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .tab-content { display: none; margin-top: 20px; }
+    .tab-content.active { display: block; }
+
+    /* карточки */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .card-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .btn {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.15s;
+      background: #eef2f6;
+      color: #1e293b;
+    }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: #16a34a; color: #fff; }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-outline { background: transparent; border: 1px solid #cbd5e1; }
+    .btn-outline:hover { background: #f1f5f9; }
+    .btn-sm { padding: 4px 12px; font-size: 12px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 2px solid #e9edf2;
+      color: #475569;
+      font-weight: 600;
+    }
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e9edf2;
+      vertical-align: middle;
+    }
+    tr:hover td { background: #f8fafc; }
+    .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px 32px;
+      max-width: 520px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal h3 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .modal label {
+      display: block;
+      font-weight: 500;
+      margin: 12px 0 4px;
+      font-size: 14px;
+    }
+    .modal input, .modal select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d9e6;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .modal .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #94a3b8;
+      padding: 30px 0;
+    }
+    .badge {
+      background: #e9edf2;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .file-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .file-upload-area:hover { border-color: #2563eb; background: #f8fafc; }
+    .file-upload-area input[type="file"] { display: none; }
+
+    @media (max-width: 700px) {
+      header { flex-direction: column; align-items: stretch; }
+      .tabs { justify-content: center; }
+      .card { padding: 16px; }
+      table { font-size: 13px; }
+      th, td { padding: 6px 4px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>ZHVI 📁 File hub</h1>
+    <div class="tabs" id="tabsContainer">
+      <button class="tab-btn active" data-tab="files">Files</button>
+      <button class="tab-btn" data-tab="categories">Categories</button>
+      <button class="tab-btn" data-tab="extensions">Extensions</button>
+      <button class="tab-btn" data-tab="mimetypes">Mime-types</button>
+      <button class="tab-btn" data-tab="versions">File versions</button>
+    </div>
+  </header>
+
+  <div class="tab-content active" id="tab-files">
+    <div class="card">
+      <div class="card-header">
+        <h2>All files</h2>
+        <button class="btn btn-primary" onclick="showCreateFile()">➕ Upload</button>
+      </div>
+      <div id="filesTableWrap"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-categories">
+    <div class="card">
+      <div class="card-header">
+        <h2>Categories</h2>
+        <button class="btn btn-primary" onclick="showCreateCategory()">➕ Create</button>
+      </div>
+      <div id="categoriesTableWrap"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+
+  <div class="tab-content" id="tab-extensions">
+    <div class="card">
+      <div class="card-header">
+        <h2>Extensions</h2>
+        <button class="btn btn-primary" onclick="showCreateExtension()">➕ Create</button>
+      </div>
+      <div id="extensionsTableWrap"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-mimetypes">
+    <div class="card">
+      <div class="card-header">
+        <h2>Mime-types</h2>
+        <button class="btn btn-primary" onclick="showCreateMimeType()">➕ Create</button>
+      </div>
+      <div id="mimetypesTableWrap"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-versions">
+    <div class="card">
+      <div class="card-header">
+        <h2>File versions</h2>
+        <button class="btn btn-primary" onclick="showCreateVersion()">➕ Upload</button>
+      </div>
+      <div id="versionsTableWrap"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+  </div>
+</div>
+
+<script>
+  const API_BASE = 'http://127.0.0.1:8001';
+
+  function apiUrl(path) {
+    return API_BASE + path;
+  }
+
+  async function fetchJson(url, options = {}) {
+    const res = await fetch(apiUrl(url), {
+      ...options,
+      headers: {
+        'Accept': 'application/json',
+        ...(options.headers || {})
+      }
+    });
+    if (!res.ok) {
+      let errMsg = `${res.status} ${res.statusText}`;
+      try {
+        const errData = await res.json();
+        errMsg = errData.detail || errMsg;
+      } catch {}
+      throw new Error(errMsg);
+    }
+    if (res.status === 204) return null;
+    return res.json();
+  }
+
+  function getMethodColor(method) {
+    const map = { GET: '#16a34a', POST: '#2563eb', PATCH: '#d97706', DELETE: '#dc2626' };
+    return map[method] || '#64748b';
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleString('en-EN', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+
+      loadTabData(tab);
+    });
+  });
+
+  function loadTabData(tab) {
+    switch (tab) {
+      case 'files': loadFiles(); break;
+      case 'categories': loadCategories(); break;
+      case 'extensions': loadExtensions(); break;
+      case 'mimetypes': loadMimeTypes(); break;
+      case 'versions': loadVersions(); break;
+    }
+  }
+
+  async function loadFiles() {
+    const wrap = document.getElementById('filesTableWrap');
+    try {
+      const data = await fetchJson('/api/files/');
+      if (!data || data.length === 0) {
+        wrap.innerHTML = '<div class="empty">No files</div>';
+        return;
+      }
+      let html = `<table>
+        <thead><tr><th>ID</th><th>Name</th><th>Extension</th><th>Versions</th><th>Actions</th></tr></thead><tbody>`;
+      for (const f of data) {
+        const extName = f.extension ? f.extension.name : '-';
+        const versionsCount = f.versions ? f.versions.length : 0;
+        html += `<tr>
+          <td>${f.id}</td>
+          <td><strong>${escapeHtml(f.name)}</strong></td>
+          <td>${escapeHtml(extName)}</td>
+          <td>${versionsCount}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-outline" onclick="showFileDetail(${f.id})">👁</button>
+            <button class="btn btn-sm btn-success" onclick="downloadFile(${f.id})">⬇</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteFile(${f.id})">✕</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    } catch (e) {
+      wrap.innerHTML = `<div class="empty" style="color:#dc2626;">Error: ${e.message}</div>`;
+    }
+  }
+
+  async function loadCategories() {
+    const wrap = document.getElementById('categoriesTableWrap');
+    try {
+      const data = await fetchJson('/api/categories/');
+      if (!data || data.length === 0) {
+        wrap.innerHTML = '<div class="empty">No categories</div>';
+        return;
+      }
+      let html = `<table>
+        <thead><tr><th>ID</th><th>Name</th><th>Mime-types</th><th>Actions</th></tr></thead><tbody>`;
+      for (const c of data) {
+        const mimeCount = c.mime_types ? c.mime_types.length : 0;
+        html += `<tr>
+          <td>${c.id}</td>
+          <td>${escapeHtml(c.name)}</td>
+          <td>${mimeCount}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-outline" onclick="editCategory(${c.id}, '${escapeHtml(c.name)}')">✎</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})">✕</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    } catch (e) {
+      wrap.innerHTML = `<div class="empty" style="color:#dc2626;">Error: ${e.message}</div>`;
+    }
+  }
+
+
+  async function loadExtensions() {
+    const wrap = document.getElementById('extensionsTableWrap');
+    try {
+      const data = await fetchJson('/api/extensions/');
+      if (!data || data.length === 0) {
+        wrap.innerHTML = '<div class="empty">Нет расширений</div>';
+        return;
+      }
+      let html = `<table>
+        <thead><tr><th>ID</th><th>Name</th><th>Mime-types</th><th>Actions</th></tr></thead><tbody>`;
+      for (const e of data) {
+        const mimeName = e.mime_type ? e.mime_type.name : '-';
+        html += `<tr>
+          <td>${e.id}</td>
+          <td>${escapeHtml(e.name)}</td>
+          <td>${escapeHtml(mimeName)}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-outline" onclick="editExtension(${e.id}, '${escapeHtml(e.name)}', ${e.mime_type ? e.mime_type.id : 'null'})">✎</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteExtension(${e.id})">✕</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    } catch (e) {
+      wrap.innerHTML = `<div class="empty" style="color:#dc2626;">Error: ${e.message}</div>`;
+    }
+  }
+
+
+  async function loadMimeTypes() {
+    const wrap = document.getElementById('mimetypesTableWrap');
+    try {
+      const data = await fetchJson('/api/mime_types/');
+      if (!data || data.length === 0) {
+        wrap.innerHTML = '<div class="empty">No mime-types</div>';
+        return;
+      }
+      let html = `<table>
+        <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Extensions</th><th>Actions</th></tr></thead><tbody>`;
+      for (const m of data) {
+        const catName = m.category ? m.category.name : '-';
+        const extCount = m.extensions ? m.extensions.length : 0;
+        html += `<tr>
+          <td>${m.id}</td>
+          <td>${escapeHtml(m.name)}</td>
+          <td>${escapeHtml(catName)}</td>
+          <td>${extCount}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-outline" onclick="editMimeType(${m.id}, '${escapeHtml(m.name)}', ${m.category ? m.category.id : 'null'})">✎</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteMimeType(${m.id})">✕</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    } catch (e) {
+      wrap.innerHTML = `<div class="empty" style="color:#dc2626;">Error: ${e.message}</div>`;
+    }
+  }
+
+
+  async function loadVersions() {
+    const wrap = document.getElementById('versionsTableWrap');
+    try {
+      const data = await fetchJson('/api/file_versions/');
+      if (!data || data.length === 0) {
+        wrap.innerHTML = '<div class="empty">No versions</div>';
+        return;
+      }
+      let html = `<table>
+        <thead><tr><th>UUID</th><th>Version</th><th>Bytes</th><th>File</th><th>Actions</th></tr></thead><tbody>`;
+      for (const v of data) {
+        const fileName = v.file ? v.file.name : '-';
+        html += `<tr>
+          <td><code>${v.id.substring(0, 8)}</code></td>
+          <td>${escapeHtml(v.version || '—')}</td>
+          <td>${v.bytes || 0}</td>
+          <td>${escapeHtml(fileName)}</td>
+          <td class="actions">
+            <button class="btn btn-sm btn-success" onclick="downloadVersion('${v.id}')">⬇</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteVersion('${v.id}')">✕</button>
+          </td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    } catch (e) {
+      wrap.innerHTML = `<div class="empty" style="color:#dc2626;">Error: ${e.message}</div>`;
+    }
+  }
+
+
+  async function deleteFile(id) {
+    if (!confirm('Delete file?')) return;
+    try {
+      await fetchJson(`/api/files/${id}`, { method: 'DELETE' });
+      loadFiles();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+  async function downloadFile(id) {
+    try {
+      const res = await fetch(apiUrl(`/api/files/download/${id}`));
+      if (!res.ok) throw new Error(await res.text());
+      const blob = await res.blob();
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `file_${id}`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (e) {
+      alert('Error downloading: ' + e.message);
+    }
+  }
+
+  async function showFileDetail(id) {
+    try {
+      const data = await fetchJson(`/api/files/${id}`);
+      const ext = data.extension ? data.extension.name : '—';
+      const versions = data.versions || [];
+      let msg = `File #${data.id}\nName: ${data.name}\nExtension: ${ext}\nVersions: ${versions.length}\n\nVesions:\n`;
+      versions.forEach(v => {
+        msg += `  ${v.version || '—'} (${v.bytes} bytes) UUID: ${v.id.substring(0, 8)}...\n`;
+      });
+      alert(msg);
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+
+  function showCreateFile() {
+    showModal(`
+      <h3>📤 Upload file</h3>
+      <form id="uploadForm">
+        <label>Select file *</label>
+        <div class="file-upload-area" id="dropArea">
+          <p>Click or drag a file</p>
+          <input type="file" id="fileInput" required />
+        </div>
+        <label>Password (Optional)</label>
+        <input type="text" id="filePassword" placeholder="leave blank" />
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    `);
+
+    const area = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    area.addEventListener('click', () => fileInput.click());
+    area.addEventListener('dragover', e => { e.preventDefault(); area.style.borderColor = '#2563eb'; });
+    area.addEventListener('dragleave', () => { area.style.borderColor = '#cbd5e1'; });
+    area.addEventListener('drop', e => {
+      e.preventDefault();
+      area.style.borderColor = '#cbd5e1';
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        area.innerHTML = `<p>📎 ${e.dataTransfer.files[0].name}</p>`;
+      }
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        area.innerHTML = `<p>📎 ${fileInput.files[0].name}</p>`;
+      } else {
+        area.innerHTML = `<p>Click or drag file</p><input type="file" id="fileInput" required />`;
+      }
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = fileInput.files[0];
+      if (!file) { alert('Select file'); return; }
+      const password = document.getElementById('filePassword').value || '';
+
+      const formData = new FormData();
+      formData.append('file', file);
+      if (password) formData.append('password', password);
+
+      try {
+        const res = await fetch(apiUrl('/api/files/'), {
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
+        }
+        closeModal();
+        loadFiles();
+      } catch (err) {
+        alert('Error uploading: ' + err.message);
+      }
+    });
+  }
+
+  // ─── Категории ─────────────────────────────────────────────
+
+  function showCreateCategory() {
+    showModal(`
+      <h3>➕ New category</h3>
+      <form id="categoryForm">
+        <label>Name *</label>
+        <input type="text" id="catName" required />
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    `);
+    document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('catName').value.trim();
+      if (!name) return;
+      try {
+        await fetchJson(`/api/categories/?name=${encodeURIComponent(name)}`, { method: 'POST' });
+        closeModal();
+        loadCategories();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  function editCategory(id, currentName) {
+    showModal(`
+      <h3>✎ Update category</h3>
+      <form id="categoryForm">
+        <label>Name *</label>
+        <input type="text" id="catName" value="${currentName}" required />
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    `);
+    document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('catName').value.trim();
+      if (!name) return;
+      try {
+        await fetchJson(`/api/categories/${id}?name=${encodeURIComponent(name)}`, { method: 'PATCH' });
+        closeModal();
+        loadCategories();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  async function deleteCategory(id) {
+    if (!confirm('Delete category?')) return;
+    try {
+      await fetchJson(`/api/categories/${id}`, { method: 'DELETE' });
+      loadCategories();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+
+
+  async function showCreateExtension() {
+    let mimeTypes = [];
+    try {
+      mimeTypes = await fetchJson('/api/mime_types/');
+    } catch {}
+    const options = mimeTypes.map(m => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join('');
+    showModal(`
+      <h3>➕ New Extension</h3>
+      <form id="extensionForm">
+        <label>Name *</label>
+        <input type="text" id="extName" placeholder=".txt" required />
+        <label>MIME-тип *</label>
+        <select id="extMimeType" required>
+          <option value="">— select —</option>
+          ${options}
+        </select>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    `);
+    document.getElementById('extensionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('extName').value.trim();
+      const mimeTypeId = document.getElementById('extMimeType').value;
+      if (!name || !mimeTypeId) return;
+      try {
+        await fetchJson(`/api/extensions/?name=${encodeURIComponent(name)}&mime_type_id=${mimeTypeId}`, { method: 'POST' });
+        closeModal();
+        loadExtensions();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  function editExtension(id, currentName, currentMimeId) {
+    (async () => {
+      let mimeTypes = [];
+      try { mimeTypes = await fetchJson('/api/mime_types/'); } catch {}
+      const options = mimeTypes.map(m =>
+        `<option value="${m.id}" ${m.id === currentMimeId ? 'selected' : ''}>${escapeHtml(m.name)}</option>`
+      ).join('');
+      showModal(`
+        <h3>✎ Update extension</h3>
+        <form id="extensionForm">
+          <label>Name *</label>
+          <input type="text" id="extName" value="${currentName}" required />
+          <label>Mime-type *</label>
+          <select id="extMimeType" required>
+            <option value="">— select —</option>
+            ${options}
+          </select>
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      `);
+      document.getElementById('extensionForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('extName').value.trim();
+        const mimeTypeId = document.getElementById('extMimeType').value;
+        if (!name || !mimeTypeId) return;
+        try {
+          await fetchJson(`/api/extensions/${id}?name=${encodeURIComponent(name)}&mime_type_id=${mimeTypeId}`, { method: 'PATCH' });
+          closeModal();
+          loadExtensions();
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      });
+    })();
+  }
+
+  async function deleteExtension(id) {
+    if (!confirm('Delete extension?')) return;
+    try {
+      await fetchJson(`/api/extensions/${id}`, { method: 'DELETE' });
+      loadExtensions();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+
+
+  async function showCreateMimeType() {
+    let categories = [];
+    try { categories = await fetchJson('/api/categories/'); } catch {}
+    const options = categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+    showModal(`
+      <h3>➕ New mime-type</h3>
+      <form id="mimeForm">
+        <label>Name *</label>
+        <input type="text" id="mimeName" placeholder="image/png" required />
+        <label>Category *</label>
+        <select id="mimeCategory" required>
+          <option value="">— select —</option>
+          ${options}
+        </select>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    `);
+    document.getElementById('mimeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('mimeName').value.trim();
+      const categoryId = document.getElementById('mimeCategory').value;
+      if (!name || !categoryId) return;
+      try {
+        await fetchJson(`/api/mime_types/?name=${encodeURIComponent(name)}&category_id=${categoryId}`, { method: 'POST' });
+        closeModal();
+        loadMimeTypes();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  function editMimeType(id, currentName, currentCategoryId) {
+    (async () => {
+      let categories = [];
+      try { categories = await fetchJson('/api/categories/'); } catch {}
+      const options = categories.map(c =>
+        `<option value="${c.id}" ${c.id === currentCategoryId ? 'selected' : ''}>${escapeHtml(c.name)}</option>`
+      ).join('');
+      showModal(`
+        <h3>✎ Update mime-type</h3>
+        <form id="mimeForm">
+          <label>Name *</label>
+          <input type="text" id="mimeName" value="${currentName}" required />
+          <label>Category *</label>
+          <select id="mimeCategory" required>
+            <option value="">— select —</option>
+            ${options}
+          </select>
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      `);
+      document.getElementById('mimeForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('mimeName').value.trim();
+        const categoryId = document.getElementById('mimeCategory').value;
+        if (!name || !categoryId) return;
+        try {
+          await fetchJson(`/api/mime_types/${id}?sub_name=${encodeURIComponent(name)}&category_id=${categoryId}`, { method: 'PATCH' });
+          closeModal();
+          loadMimeTypes();
+        } catch (err) {
+          alert('Error: ' + err.message);
+        }
+      });
+    })();
+  }
+
+  async function deleteMimeType(id) {
+    if (!confirm('Delete mime-type?')) return;
+    try {
+      await fetchJson(`/api/mime_types/${id}`, { method: 'DELETE' });
+      loadMimeTypes();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+  // ─── Версии ────────────────────────────────────────────────
+
+  async function showCreateVersion() {
+    let files = [];
+    try { files = await fetchJson('/api/files/'); } catch {}
+    const options = files.map(f => `<option value="${f.id}">#${f.id} ${escapeHtml(f.name)}</option>`).join('');
+    showModal(`
+      <h3>➕ Upload new version</h3>
+      <form id="versionForm">
+        <label>File *</label>
+        <select id="versionFileId" required>
+          <option value="">— select —</option>
+          ${options}
+        </select>
+        <label>Version name, example (1.0/2.0/2.1.1)</label>
+        <input type="text" id="versionTag" placeholder="v2.0" />
+        <label>File verion*</label>
+        <input type="file" id="versionFileInput" required />
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    `);
+    document.getElementById('versionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileId = document.getElementById('versionFileId').value;
+      const version = document.getElementById('versionTag').value.trim() || '';
+      const fileInput = document.getElementById('versionFileInput');
+      if (!fileId || !fileInput.files.length) return;
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      try {
+        const url = `/api/file_versions/?file_id=${fileId}&version=${encodeURIComponent(version)}`;
+        const res = await fetch(apiUrl(url), {
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
+        }
+        closeModal();
+        loadVersions();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  async function downloadVersion(uuid) {
+    try {
+      const res = await fetch(apiUrl(`/api/file_versions/download/${uuid}`));
+      if (!res.ok) throw new Error(await res.text());
+      const blob = await res.blob();
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `version_${uuid.substring(0,8)}`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (e) {
+      alert('Error downloading: ' + e.message);
+    }
+  }
+
+  async function deleteVersion(uuid) {
+    if (!confirm('Delete version?')) return;
+    try {
+      await fetchJson(`/api/file_versions/${uuid}`, { method: 'DELETE' });
+      loadVersions();
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  }
+
+
+  function showModal(html) {
+    document.getElementById('modalContent').innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+
+
+  loadFiles();
+</script>
+</body>
+</html>
