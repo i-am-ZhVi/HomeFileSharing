@@ -271,7 +271,14 @@
 </div>
 
 <script>
-  const API_BASE = 'http://127.0.0.1:8001';
+    window.ENV = {
+        API_BASE: "{{ API_BASE }}"
+    };
+</script>
+
+<script type="module">
+
+  const API_BASE = window.ENV.API_BASE;
 
   function apiUrl(path) {
     return API_BASE + path;
@@ -600,8 +607,6 @@
     });
   }
 
-  // ─── Категории ─────────────────────────────────────────────
-
   function showCreateCategory() {
     showModal(`
       <h3>➕ New category</h3>
@@ -837,8 +842,6 @@
       alert('Error: ' + e.message);
     }
   }
-
-  // ─── Версии ────────────────────────────────────────────────
 
   async function showCreateVersion() {
     let files = [];

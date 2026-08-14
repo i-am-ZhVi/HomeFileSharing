@@ -1,8 +1,9 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from core.config import settings
 from features.routes import router as api_router
 
@@ -52,7 +53,11 @@ def root():
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
+templates = Jinja2Templates(directory="static")
 @app.get("/api/web-app")
-def web_app():
-    return FileResponse("static/web_interface.html")
+def web_app(request: Request):
+    return templates.TemplateResponse(
+            request=request,
+            name="web_interface.html",
+            context={"API_BASE": f"http://{settings.API_HOST}:{settings.API_PORT}"}
+        )
